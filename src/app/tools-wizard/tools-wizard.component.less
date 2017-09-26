@@ -1,0 +1,101 @@
+@import "../../common";
+
+@wizardH1Size: 30px;
+@wizardTBPadding: 20px;
+
+.wizard-container {
+  height: 100vh;
+  padding: 0 @containerMarginSize;
+  margin: 0 -15px;
+  background-color: @extraLightGrayColor;
+}
+
+.wizard-header {
+  //margin: 0 -15px;
+  //padding: 0 15px;
+  background-color: @whiteColor;
+
+  border-bottom: 2px solid @lightGrayColor;
+  h1 {
+    .gothamMediumFont(@wizardH1Size);
+    color: @darkGrayColor;
+    margin: @wizardTBPadding 0;
+  }
+}
+
+.steps-container {
+  height: @wizardH1Size + 2*@wizardTBPadding;
+  position: relative;
+  text-align: right;
+
+  .steps {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+  }
+
+}
+
+ol.steps {
+  list-style: none;
+  counter-reset: li;
+  padding: 0;
+  margin: 0;
+
+
+  li.active {
+    color: @blueColor;
+    font-weight: 600;
+    &::before {
+      color: @whiteColor;
+      border-color: @blueColor;
+      background-color: @blueColor;
+    }
+  }
+
+  li.done {
+    &::before {
+      content: "\E013";
+      font-family: 'Glyphicons Halflings';
+      font-style: normal;
+      font-weight: normal;
+      -webkit-font-smoothing: antialiased;
+      color: @whiteColor;
+      border-color: @greenColor;
+      background-color: @greenColor;
+    }
+  }
+
+  > a {
+    margin-right: 30px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  li {
+    counter-increment: li;
+    color: @grayColor;
+    .sourceSansProFont(400, 16px);
+    display: inline-block;
+
+
+    &::before {
+      .sourceSansProFont(600, 16px);
+
+      border: 2px solid @grayColor;
+      background-color: transparent;
+      color: @grayColor;
+      padding: 0 4px;
+      text-align: center;
+      content: counter(li);
+      display: inline-block;
+      line-height: 2.1em;
+      width: 2.3em;
+      border-radius: 2.2em;
+      margin-right: 10px;
+    }
+  }
+}
+

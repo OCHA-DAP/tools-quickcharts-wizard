@@ -1,0 +1,15 @@
+@import "../../common";
+
+@wizardFormBorderRadius: 3px;
+
+input.wizard-input {
+  padding: 5px 10px;
+  border: 1px solid @lightGrayColor;
+  border-radius: @wizardFormBorderRadius;
+
+  &::placeholder {
+    color: @lightGrayColor;
+    .sourceSansProFont(300, 14px);
+  }
+}
+

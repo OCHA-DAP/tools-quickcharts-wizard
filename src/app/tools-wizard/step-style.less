@@ -1,0 +1,80 @@
+@import "../../common";
+@import "../../hdx-styles/src/common/less/base/buttons";
+@import "form-styles";
+
+.step {
+  color: @darkGrayColor;
+
+  .step-header {
+    background-color: @whiteColor;
+  }
+
+  .btn.next-step {
+    min-width: 136px;
+    min-height: 45px;
+    .gothamBoldFont(14px);
+    background-color: @lightGrayColor;
+  }
+
+  .next-step {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    margin-right: 15px;
+  }
+
+  .title {
+    margin-top: 32px;
+    margin-bottom: 5px;
+    .sourceSansProFont(600, 18px);
+  }
+  .description {
+    .sourceSansProFont(400, 16px);
+    margin-bottom: 25px;
+  }
+  .step-content {
+    padding-top: 45px;
+    padding-bottom: 45px;
+    background-color: @extraLightGrayColor;
+    .sourceSansProFont(400, 16px);
+    color: @darkGrayColor;
+    label {
+      font-weight: 400;
+    }
+    .source-custom-url {
+      label {
+        display: block;
+        .sourceSansProFont(400, 16px);
+      }
+      input {
+        width: 100%;
+      }
+    }
+    .source-selector {
+      label {
+        display: block;
+      }
+      input[type=radio] {
+        margin-right: 5px;
+      }
+    }
+    ul {
+      list-style: none;
+      padding-left: 22px;
+      li {
+        padding-left: 25px;
+        position: relative;
+        margin: 5px 0;
+        color: @blueColor;
+        img {
+          height: 1.2em;
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translate(0, -50%);
+        }
+      }
+    }
+  }
+}
