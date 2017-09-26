@@ -20,7 +20,11 @@
           <input type="radio" name="data-source" id="data-source-url-apis"> Import from URL/APIs
           <ul>
             <li><img src="/assets/icons/dropbox.png"> Dropbox</li>
-            <li><img src="/assets/icons/drive.png">Google Drive</li>
+            <li>
+              <a href="javascript:void(0)" (click)="loadGooglePicker()">
+                <img src="/assets/icons/drive.png">Google Drive
+              </a>
+            </li>
             <li><img src="/assets/icons/hdx.ico">HDX</li>
           </ul>
         </label>
@@ -28,7 +32,7 @@
     </div>
     <div class="col-xs-9 source-custom-url">
       <label for="source-custom-url-field">Enter URL</label>
-      <input class="wizard-input" id="source-custom-url-field" placeholder="eg. http://example.com/population-jan-2011.json">
+      <input [(ngModel)]="selectedUrl" name="selectedUrl" class="wizard-input" id="source-custom-url-field" placeholder="eg. http://example.com/population-jan-2011.json">
     </div>
   </div>
 </div>
