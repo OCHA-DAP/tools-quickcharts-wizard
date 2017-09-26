@@ -1,3 +1,63 @@
-<p>
-  select works!
-</p>
+<div id="step2" class="step">
+  <div class="paddingRowHack step-header">
+    <div class="paddingLeftHack paddingRightHack">
+      <div class="row" style="position: relative;">
+        <div class="col-xs-10">
+          <div class="title">2. Select Recipe</div>
+          <div class="description">Chart recipes determine what charts will be generated from your spreadsheet.</div>
+        </div>
+        <span class="btn-actions">
+          <button class="btn btn-empty-black">Previous</button>
+          <button class="btn btn-primary next-step">Next Step</button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row step-content">
+    <div class="col-xs-3">
+      <div class="radio-selection">
+        <div class="radio-title">Recipe options:</div>
+        <label for="recipe-opt-hdx"><input type="radio" name="data-source" id="recipe-opt-hdx">HDX Quick Charts Recipes <br>(See <a>a list of 100+ recipes</a>)</label>
+        <label for="recipe-opt-custom">
+          <input type="radio" name="data-source" id="recipe-opt-custom"> Custom Recipes <br>
+          (Bring your own json file to create custom charts. Read <a>documentation</a> to learn more)
+          <ul>
+            <li><img src="/assets/icons/dropbox.png"> Dropbox</li>
+            <li><img src="/assets/icons/drive.png">Google Drive</li>
+          </ul>
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-9 recipe-results">
+      <div class="results-title">10 charts are available based on the recipes</div>
+
+      <div class="result-group">
+        <div class="section-title">Bar chart</div>
+        <ul class="result-list">
+          <li>Number of affected people in admin1 (#admin1 and #affected)</li>
+          <li>Number of affected people in admin2 (#admin2 and #affected)</li>
+          <li>Number of population (#admin1 and #population)</li>
+        </ul>
+      </div>
+
+      <div class="result-group">
+        <div class="section-title">Line chart (Timeseries)</div>
+        <ul class="result-list">
+          <li>Affected population (#date and #affected)</li>
+          <li>People in need (#date and #inneed)</li>
+          <li>People reached (#date and #reached)</li>
+        </ul>
+      </div>
+
+      <div class="result-group">
+        <div class="section-title">Key figures</div>
+        <ul class="result-list">
+          <li>Number of affected  (#affected)</li>
+          <li>Number of people in need (#inneed)</li>
+          <li>Number of targeted people(#targeted)</li>
+          <li>Number of people reached (#reached)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

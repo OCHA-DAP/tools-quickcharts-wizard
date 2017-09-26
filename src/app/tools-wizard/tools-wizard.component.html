@@ -8,9 +8,9 @@
         <div class="col-xs-8">
           <div class="steps-container">
             <ol class="steps">
-              <a href="#"><li [ngClass]="{'active': !stepDone, 'done': stepDone}">Import Data</li></a>
-              <a href="#"><li [ngClass]="{'active': stepDone}">Select Recipes</li></a>
-              <a href="#"><li>Share Quick Charts</li></a>
+              <a routerLink="/import" routerLinkActive="active" [ngClass]="{'done': selectActive.isActive || shareActive.isActive }"><li >Import Data</li></a>
+              <a routerLink="/select" routerLinkActive="active" #selectActive="routerLinkActive" [ngClass]="{'done': shareActive.isActive }"><li>Select Recipes</li></a>
+              <a routerLink="/share" routerLinkActive="active" #shareActive="routerLinkActive"><li>Share Quick Charts</li></a>
             </ol>
           </div>
         </div>

@@ -7,7 +7,6 @@
   height: 100vh;
   padding: 0 @containerMarginSize;
   margin: 0 -15px;
-  background-color: @extraLightGrayColor;
 }
 
 .wizard-header {
@@ -44,7 +43,7 @@ ol.steps {
   margin: 0;
 
 
-  li.active {
+  .active li {
     color: @blueColor;
     font-weight: 600;
     &::before {
@@ -54,7 +53,7 @@ ol.steps {
     }
   }
 
-  li.done {
+  .done li {
     &::before {
       content: "\E013";
       font-family: 'Glyphicons Halflings';

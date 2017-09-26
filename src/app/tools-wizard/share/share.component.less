@@ -1,0 +1,26 @@
+@import "../step-style";
+@import "../form-styles";
+
+.quick-charts-render {
+  padding: 0;
+  background-color: @whiteColor;
+}
+.share-section {
+  margin-top: 30px;
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  @embedCodeFontSize: 16px;
+  @embedCodeLineHeight: 1.5*@embedCodeFontSize;
+  #embedCode {
+    margin-top: 10px;
+    .sourceSansProFont(400, @embedCodeFontSize);
+    width: 100%;
+    line-height: @embedCodeLineHeight;
+    height: 4*@embedCodeLineHeight + 2*@wizardFormTBPadding;
+  }
+}
+
