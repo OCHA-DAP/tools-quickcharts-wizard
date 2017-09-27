@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImportComponent implements OnInit {
 
+  dataSourceSample = true;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  changeDatasource($event) {
+    this.dataSourceSample = $event.target.value === 'sample';
   }
 
 }
