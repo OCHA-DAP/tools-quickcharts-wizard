@@ -21,7 +21,7 @@
           <ul>
             <li><img src="/assets/icons/dropbox.png"> Dropbox</li>
             <li>
-              <a href="javascript:void(0)" (click)="loadGooglePicker()">
+              <a href="javascript:void(0)" hdxGooglepicker (urlSelect)="updateSelectedUrl($event)">
                 <img src="/assets/icons/drive.png">Google Drive
               </a>
             </li>

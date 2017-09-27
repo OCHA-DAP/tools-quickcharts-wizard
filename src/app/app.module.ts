@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ImportComponent } from './tools-wizard/import/import.component';
 import { SelectComponent } from './tools-wizard/select/select.component';
 import { ShareComponent } from './tools-wizard/share/share.component';
+import { CommonModule } from './common/common.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ShareComponent } from './tools-wizard/share/share.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
