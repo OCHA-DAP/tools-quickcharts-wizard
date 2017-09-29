@@ -27,73 +27,17 @@
       </div>
     </div>
     <div *ngIf="dataSourceSample" class="col-xs-9 source-sample-data">
-      <label class="sample-item active">
-        <input name="sample-data-selection" type="radio" checked>
+      <label *ngFor="let s of sampleData" class="sample-item active">
+        <input name="sample-data-selection" value="{{ s.url }}" type="radio" checked>
         <span class="sample-content">
           <span class="sample-title">
-            FTS Requirements and Funding data for Venezuela, Bolivian Republic of
+            {{ s.name }}
           </span>
           <span class="sample-source">
-            OCHA FTS
+            {{ s.org }}
           </span>
           <span class="sample-date">
-            Updated August 24, 2017 | Dataset date: Aug 24, 2017
-          </span>
-        </span>
-      </label>
-      <label class="sample-item">
-        <input name="sample-data-selection" type="radio">
-        <span class="sample-content">
-          <span class="sample-title">
-            FTS Requirements and Funding data for Venezuela, Bolivian Republic of
-          </span>
-          <span class="sample-source">
-            OCHA FTS
-          </span>
-          <span class="sample-date">
-            Updated August 24, 2017 | Dataset date: Aug 24, 2017
-          </span>
-        </span>
-      </label>
-      <label class="sample-item">
-        <input name="sample-data-selection" type="radio">
-        <span class="sample-content">
-          <span class="sample-title">
-            FTS Requirements and Funding data for Venezuela, Bolivian Republic of
-          </span>
-          <span class="sample-source">
-            OCHA FTS
-          </span>
-          <span class="sample-date">
-            Updated August 24, 2017 | Dataset date: Aug 24, 2017
-          </span>
-        </span>
-      </label>
-      <label class="sample-item">
-        <input name="sample-data-selection" type="radio">
-        <span class="sample-content">
-          <span class="sample-title">
-            FTS Requirements and Funding data for Venezuela, Bolivian Republic of
-          </span>
-          <span class="sample-source">
-            OCHA FTS
-          </span>
-          <span class="sample-date">
-            Updated August 24, 2017 | Dataset date: Aug 24, 2017
-          </span>
-        </span>
-      </label>
-      <label class="sample-item">
-        <input name="sample-data-selection" type="radio">
-        <span class="sample-content">
-          <span class="sample-title">
-            FTS Requirements and Funding data for Venezuela, Bolivian Republic of
-          </span>
-          <span class="sample-source">
-            OCHA FTS
-          </span>
-          <span class="sample-date">
-            Updated August 24, 2017 | Dataset date: Aug 24, 2017
+            {{ s.url }}
           </span>
         </span>
       </label>
