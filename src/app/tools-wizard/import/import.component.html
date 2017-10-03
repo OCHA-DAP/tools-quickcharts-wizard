@@ -15,9 +15,9 @@
   <div class="row step-content">
     <div class="col-xs-3">
       <div class="radio-selection">
-        <label for="data-source-sample"><input type="radio" name="data-source" id="data-source-sample"> Try our sample data</label>
+        <label for="data-source-sample"><input type="radio" value="sample" name="data-source" (change)="changeDatasource($event);" [checked]="dataSourceSample" id="data-source-sample"> Try our sample data</label>
         <label for="data-source-url-apis">
-          <input type="radio" name="data-source" id="data-source-url-apis"> Import from URL/APIs
+          <input type="radio" value="url" name="data-source" (change)="changeDatasource($event);" [checked]="!dataSourceSample" id="data-source-url-apis"> Import from URL/APIs
           <ul>
             <li><img src="/assets/icons/dropbox.png"> Dropbox</li>
             <li>
@@ -30,7 +30,23 @@
         </label>
       </div>
     </div>
-    <div class="col-xs-9 source-custom-url">
+    <div *ngIf="dataSourceSample" class="col-xs-9 source-sample-data">
+      <label *ngFor="let s of sampleData" class="sample-item active">
+        <input name="sample-data-selection" value="{{ s.url }}" type="radio" checked>
+        <span class="sample-content">
+          <span class="sample-title">
+            {{ s.name }}
+          </span>
+          <span class="sample-source">
+            {{ s.org }}
+          </span>
+          <span class="sample-date">
+            {{ s.url }}
+          </span>
+        </span>
+      </label>
+    </div>
+    <div *ngIf="!dataSourceSample" class="col-xs-9 source-custom-url">
       <label for="source-custom-url-field">Enter URL</label>
       <input [(ngModel)]="selectedUrl" name="selectedUrl" class="wizard-input" id="source-custom-url-field" placeholder="eg. http://example.com/population-jan-2011.json">
     </div>
