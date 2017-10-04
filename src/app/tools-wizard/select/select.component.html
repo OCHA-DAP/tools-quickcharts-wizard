@@ -29,33 +29,26 @@
       </div>
     </div>
     <div class="col-xs-9 recipe-results">
-      <div class="results-title">10 charts are available based on the recipes</div>
+      <div class="results-title"> {{totalBites()}} charts are available based on the recipes</div>
 
-      <div class="result-group">
+      <div class="result-group" *ngIf="chartBites.length > 0">
         <div class="section-title">Bar chart</div>
         <ul class="result-list">
-          <li>Number of affected people in admin1 (#admin1 and #affected)</li>
-          <li>Number of affected people in admin2 (#admin2 and #affected)</li>
-          <li>Number of population (#admin1 and #population)</li>
+          <li *ngFor="let b of chartBites">{{b.title}}</li>
         </ul>
       </div>
 
-      <div class="result-group">
+      <div class="result-group" *ngIf="timeseriesBites.length > 0">
         <div class="section-title">Line chart (Timeseries)</div>
         <ul class="result-list">
-          <li>Affected population (#date and #affected)</li>
-          <li>People in need (#date and #inneed)</li>
-          <li>People reached (#date and #reached)</li>
+          <li *ngFor="let b of timeseriesBites">{{b.title}}</li>
         </ul>
       </div>
 
-      <div class="result-group">
+      <div class="result-group" *ngIf="keyfigureBites.length > 0">
         <div class="section-title">Key figures</div>
         <ul class="result-list">
-          <li>Number of affected  (#affected)</li>
-          <li>Number of people in need (#inneed)</li>
-          <li>Number of targeted people(#targeted)</li>
-          <li>Number of people reached (#reached)</li>
+          <li *ngFor="let b of keyfigureBites">{{b.title}}</li>
         </ul>
       </div>
     </div>

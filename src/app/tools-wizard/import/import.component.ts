@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { GooglepickerDirective } from './../../common/googlepicker.directive';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
@@ -79,7 +80,7 @@ export class ImportComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -90,6 +91,10 @@ export class ImportComponent implements OnInit {
   }
   changeDatasource($event) {
     this.dataSourceSample = $event.target.value === 'sample';
+  }
+
+  navigateToSelect() {
+    this.router.navigate(['/select', {'url': this.selectedUrl}]);
   }
 
 }
