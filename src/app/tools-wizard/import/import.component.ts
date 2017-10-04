@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { GooglepickerDirective } from './../../common/googlepicker.directive';
+import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({

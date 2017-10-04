@@ -5,6 +5,7 @@ import 'rxjs/add/operator/mergeMap';
 import { CookBookService, Bite, KeyFigureBite, ChartBite, TimeseriesChartBite } from 'hdxtools-ng-lib';
 import { WizardConfigService } from './../../wizard-config.service';
 import { GooglepickerDirective } from './../../common/googlepicker.directive';
+import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';
 import 'rxjs/Rx';
 
 @Component({
