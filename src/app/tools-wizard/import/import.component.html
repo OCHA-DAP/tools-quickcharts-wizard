@@ -7,7 +7,7 @@
           <div class="description">Import a spreadsheet or csv file via a URL of from the cloud. Supported format: <strong>csv, xls and xlsx</strong></div>
         </div>
         <span class="btn-actions">
-          <button (click)=navigateToSelect() class="btn btn-primary next-step">Next Step</button>
+          <button (click)="navigateToSelect()" class="btn btn-primary next-step">Next Step</button>
         </span>
       </div>
     </div>
@@ -32,7 +32,7 @@
     </div>
     <div *ngIf="dataSourceSample" class="col-xs-9 source-sample-data">
       <label *ngFor="let s of sampleData" class="sample-item active">
-        <input name="sample-data-selection" value="{{ s.url }}" type="radio" checked>
+        <input name="sample-data-selection" value="{{ s.url }}" type="radio" checked (change)="changeSampleUrl(s.url);">
         <span class="sample-content">
           <span class="sample-title">
             {{ s.name }}

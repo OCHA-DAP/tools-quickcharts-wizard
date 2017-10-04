@@ -8,7 +8,7 @@
         </div>
         <span class="btn-actions">
           <button class="btn btn-empty-black">Previous</button>
-          <button class="btn btn-primary next-step">Next Step</button>
+          <button (click)="navigateToShare()" class="btn btn-primary next-step">Next Step</button>
         </span>
       </div>
     </div>
@@ -23,33 +23,45 @@
           (Bring your own json file to create custom charts. Read <a>documentation</a> to learn more)
           <ul>
             <li><img src="/assets/icons/dropbox.png"> Dropbox</li>
-            <li><img src="/assets/icons/drive.png">Google Drive</li>
+            <li>
+              <a href="javascript:void(0)" hdxGooglepicker (urlSelect)="updateSelectedRecipeUrl($event)">
+                <img src="/assets/icons/drive.png">Google Drive
+              </a>
+            </li>
           </ul>
         </label>
       </div>
     </div>
     <div class="col-xs-9 recipe-results">
-      <div class="results-title"> {{totalBites()}} charts are available based on the recipes</div>
-
-      <div class="result-group" *ngIf="chartBites.length > 0">
-        <div class="section-title">Bar chart</div>
-        <ul class="result-list">
-          <li *ngFor="let b of chartBites">{{b.title}}</li>
-        </ul>
+      <div class="row">
+          <div class="source-custom-url">
+            <label for="source-custom-recipe-url-field">Enter URL</label>
+            <input [(ngModel)]="selectedRecipeUrl" name="selectedRecipeUrl" class="wizard-input" id="source-custom-recipe-url-field" placeholder="eg. http://example.com/population-jan-2011.json">
+          </div>
       </div>
+      <div class="row">
+        <div class="results-title"> {{totalBites()}} charts are available based on the recipes</div>
 
-      <div class="result-group" *ngIf="timeseriesBites.length > 0">
-        <div class="section-title">Line chart (Timeseries)</div>
-        <ul class="result-list">
-          <li *ngFor="let b of timeseriesBites">{{b.title}}</li>
-        </ul>
-      </div>
+        <div class="result-group" *ngIf="chartBites.length > 0">
+          <div class="section-title">Bar chart</div>
+          <ul class="result-list">
+            <li *ngFor="let b of chartBites">{{b.title}}</li>
+          </ul>
+        </div>
 
-      <div class="result-group" *ngIf="keyfigureBites.length > 0">
-        <div class="section-title">Key figures</div>
-        <ul class="result-list">
-          <li *ngFor="let b of keyfigureBites">{{b.title}}</li>
-        </ul>
+        <div class="result-group" *ngIf="timeseriesBites.length > 0">
+          <div class="section-title">Line chart (Timeseries)</div>
+          <ul class="result-list">
+            <li *ngFor="let b of timeseriesBites">{{b.title}}</li>
+          </ul>
+        </div>
+
+        <div class="result-group" *ngIf="keyfigureBites.length > 0">
+          <div class="section-title">Key figures</div>
+          <ul class="result-list">
+            <li *ngFor="let b of keyfigureBites">{{b.title}}</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

@@ -88,9 +88,14 @@ export class ImportComponent implements OnInit {
   updateSelectedUrl(newUrl: string) {
     console.log('Updating with ' + newUrl);
     this.selectedUrl = newUrl;
+    this.dataSourceSample = false;
   }
   changeDatasource($event) {
     this.dataSourceSample = $event.target.value === 'sample';
+  }
+
+  changeSampleUrl(url) {
+    this.selectedUrl = url;
   }
 
   navigateToSelect() {

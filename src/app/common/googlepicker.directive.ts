@@ -68,7 +68,7 @@ export class GooglepickerDirective {
       let url = '';
       if (data[google.picker.Response.ACTION] === google.picker.Action.PICKED) {
         const doc = data[google.picker.Response.DOCUMENTS][0];
-        url = doc[google.picker.Document.URL];
+        url = 'https://drive.google.com/uc?export=download&id=' + doc[google.picker.Document.ID];
       }
       const message = 'You picked: ' + url;
       console.log(message);
