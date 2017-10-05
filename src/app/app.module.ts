@@ -7,6 +7,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { ImportComponent } from './tools-wizard/import/import.component';
 import { SelectComponent } from './tools-wizard/select/select.component';
 import { ShareComponent } from './tools-wizard/share/share.component';
+import { HttpService } from './shared/http.service';
+import { Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
+
+export const HTTP_SERVICE_PROVIDERS: any = {
+  provide: Http,
+  useFactory: httpFactory,
+  deps: [XHRBackend, RequestOptions]
+};
+
+export function httpFactory(backend: XHRBackend, options: RequestOptions) {
+  return new HttpService(backend, options);
+}
 
 @NgModule({
   declarations: [
@@ -17,10 +29,13 @@ import { ShareComponent } from './tools-wizard/share/share.component';
     ShareComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
-    AppRoutingModule
+    HttpModule
   ],
-  providers: [],
+  providers: [
+    HTTP_SERVICE_PROVIDERS
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

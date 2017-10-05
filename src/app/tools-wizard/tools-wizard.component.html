@@ -8,9 +8,26 @@
         <div class="col-xs-8">
           <div class="steps-container">
             <ol class="steps">
-              <a routerLink="/import" routerLinkActive="active" [ngClass]="{'done': selectActive.isActive || shareActive.isActive }"><li >Import Data</li></a>
-              <a routerLink="/select" routerLinkActive="active" #selectActive="routerLinkActive" [ngClass]="{'done': shareActive.isActive }"><li>Select Recipes</li></a>
-              <a routerLink="/share" routerLinkActive="active" #shareActive="routerLinkActive"><li>Share Quick Charts</li></a>
+              <a routerLink="/import"
+                 routerLinkActive="active"
+                 #importLink="routerLinkActive"
+                 [ngClass]="{'done': selectActive.isActive || shareActive.isActive }">
+                <li >Import Data</li>
+              </a>
+              <a routerLink="/select"
+                 routerLinkActive="active"
+                 #selectActive="routerLinkActive"
+                 [class.disabled]="importLink.isActive ? true : null"
+                 [ngClass]="{'done': shareActive.isActive }">
+                <li>Select Recipes</li>
+              </a>
+              <a routerLink="/share"
+                 routerLinkActive="active"
+                 #shareActive="routerLinkActive"
+                 [class.disabled]="importLink.isActive || selectActive.isActive ? true : null"
+              >
+                <li>Share Quick Charts</li>
+              </a>
             </ol>
           </div>
         </div>
@@ -20,6 +37,13 @@
   <div class="row">
     <div id="current-step-content" class="col-xs-12">
       <router-outlet></router-outlet>
+    </div>
+    <div id="loading-container" *ngIf="loadingStatus">
+      <div class="loading-content">
+        <div><img src="/assets/loading-dots.gif"></div>
+        <div>Checking your data...</div>
+      </div>
+
     </div>
   </div>
 </div>

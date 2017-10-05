@@ -1,7 +1,9 @@
 @import "../../common";
 
 @wizardH1Size: 30px;
+@wizardH1LineHeight: 1.1;
 @wizardTBPadding: 20px;
+@wizardHeaderBorderSize: 2px;
 
 .wizard-container {
   height: 100vh;
@@ -14,16 +16,17 @@
   //padding: 0 15px;
   background-color: @whiteColor;
 
-  border-bottom: 2px solid @lightGrayColor;
+  border-bottom: @wizardHeaderBorderSize solid @lightGrayColor;
   h1 {
     .gothamMediumFont(@wizardH1Size);
+    line-height: @wizardH1LineHeight;
     color: @darkGrayColor;
     margin: @wizardTBPadding 0;
   }
 }
-
+@stepsContainerHeight: @wizardH1LineHeight*@wizardH1Size + 2*@wizardTBPadding;
 .steps-container {
-  height: @wizardH1Size + 2*@wizardTBPadding;
+  height: @stepsContainerHeight;
   position: relative;
   text-align: right;
 
@@ -67,6 +70,11 @@ ol.steps {
   }
 
   > a {
+    &.disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+
     margin-right: 30px;
     &:last-child {
       margin-right: 0;
@@ -98,3 +106,28 @@ ol.steps {
   }
 }
 
+#loading-container {
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  position: fixed;
+  top: @wizardHeaderBorderSize + @stepsContainerHeight;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  .loading-content {
+    position: absolute;
+    left: 50%;
+    top: 47%; // :)
+    transform: translate(-50%, -50%);
+
+    color: @whiteColor;
+    text-align: center;
+    .gothamMediumFont(15px);
+
+    img {
+      height: 22px;
+      margin-bottom:15px;
+    }
+  }
+}
