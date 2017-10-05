@@ -9,7 +9,6 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./import.component.less']
 })
 export class ImportComponent implements OnInit {
-
   selectedUrl = '';
   dataSourceSample = true;
   sampleData = [
@@ -84,6 +83,7 @@ export class ImportComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.selectedUrl = this.sampleData[0].url;
   }
 
   updateSelectedUrl(newUrl: string) {

@@ -16,6 +16,7 @@ import 'rxjs/Rx';
 export class SelectComponent implements OnInit {
 
   selectedRecipeUrl = 'https://raw.githubusercontent.com/OCHA-DAP/hdx-hxl-preview/master/src/assets/bites.json';
+  recipeSample = true;
 
   keyfigureBites: Bite[] = [];
   chartBites: Bite[] = [];
@@ -29,6 +30,10 @@ export class SelectComponent implements OnInit {
       const url = params.get('url');
       this.fetchAvailableBites(url);
     });
+  }
+
+  changeRecipe($event) {
+    this.recipeSample = $event.target.value === 'sample';
   }
 
   private fetchAvailableBites(url: string) {
