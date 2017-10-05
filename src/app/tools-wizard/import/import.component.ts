@@ -1,7 +1,8 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { GooglepickerDirective } from './../../common/googlepicker.directive';
 import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { WizardConfigService } from './../../wizard-config.service';
 
 @Component({
   selector: 'app-import',
@@ -10,7 +11,6 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 })
 export class ImportComponent implements OnInit {
   selectedUrl = '';
-  dataSourceSample = true;
   sampleData = [
     {
       'id': 'c7fb99a5-43ec-4b3f-b8db-935640c75aeb',
@@ -80,19 +80,33 @@ export class ImportComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute, private wizardConfigService: WizardConfigService) { }
 
   ngOnInit() {
-    this.selectedUrl = this.sampleData[0].url;
+    this.selectedUrl = this.getWizardConfig().url ? this.getWizardConfig().url : this.sampleData[0].url;
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      const url = params.get('url');
+      if (url) {
+        this.wizardConfigService.getWizardConfigData().url = url;
+      }
+      const recipeUrl = params.get('recipeUrl');
+      if (recipeUrl) {
+        this.wizardConfigService.getWizardConfigData().recipeUrl = recipeUrl;
+      }
+    });
+  }
+
+  getWizardConfig() {
+    return this.wizardConfigService.getWizardConfigData();
   }
 
   updateSelectedUrl(newUrl: string) {
     console.log('Updating with ' + newUrl);
     this.selectedUrl = newUrl;
-    this.dataSourceSample = false;
+    this.getWizardConfig().step1Sample = false;
   }
   changeDatasource($event) {
-    this.dataSourceSample = $event.target.value === 'sample';
+    this.getWizardConfig().step1Sample = $event.target.value === 'sample';
   }
 
   changeSampleUrl(url) {
