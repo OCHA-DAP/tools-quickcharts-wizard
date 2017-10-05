@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
+import { SimpleModule} from 'hdxtools-ng-lib';
 import { AppComponent } from './app.component';
 import { ToolsWizardComponent } from './tools-wizard/tools-wizard.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +11,8 @@ import { SelectComponent } from './tools-wizard/select/select.component';
 import { ShareComponent } from './tools-wizard/share/share.component';
 import { HttpService } from './shared/http.service';
 import { Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
+import { CommonModule } from './common/common.module';
+import { WizardConfigService } from './wizard-config.service';
 
 export const HTTP_SERVICE_PROVIDERS: any = {
   provide: Http,
@@ -29,12 +33,16 @@ export function httpFactory(backend: XHRBackend, options: RequestOptions) {
     ShareComponent
   ],
   imports: [
+    HttpModule,
     AppRoutingModule,
     BrowserModule,
-    HttpModule
+    FormsModule,
+    CommonModule,
+    SimpleModule
   ],
   providers: [
-    HTTP_SERVICE_PROVIDERS
+    HTTP_SERVICE_PROVIDERS,
+    WizardConfigService
   ],
   bootstrap: [AppComponent]
 })

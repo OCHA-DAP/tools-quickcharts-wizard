@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { GooglepickerDirective } from './../../common/googlepicker.directive';
+import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-import',
@@ -7,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImportComponent implements OnInit {
 
+  selectedUrl = '';
   dataSourceSample = true;
   sampleData = [
     {
@@ -77,13 +81,26 @@ export class ImportComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
+  updateSelectedUrl(newUrl: string) {
+    console.log('Updating with ' + newUrl);
+    this.selectedUrl = newUrl;
+    this.dataSourceSample = false;
+  }
   changeDatasource($event) {
     this.dataSourceSample = $event.target.value === 'sample';
+  }
+
+  changeSampleUrl(url) {
+    this.selectedUrl = url;
+  }
+
+  navigateToSelect() {
+    this.router.navigate(['/select', {'url': this.selectedUrl}]);
   }
 
 }

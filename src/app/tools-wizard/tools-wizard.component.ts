@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HxlproxyService } from 'hdxtools-ng-lib';
+import { environment } from './../../environments/environment';
 
 @Component({
   selector: 'hdx-tools-wizard',
@@ -8,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 export class ToolsWizardComponent implements OnInit {
   loadingStatus = false;
 
-  constructor() { }
+  constructor(private hxlProxyService: HxlproxyService) { }
 
   ngOnInit() {
+    this.hxlProxyService.init({
+      'hxlProxy': environment['hxlProxy'],
+      'noCachedMetarows': true
+    });
   }
 
 }
