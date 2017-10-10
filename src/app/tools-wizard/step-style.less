@@ -6,10 +6,28 @@
   color: @darkGrayColor;
   position: relative;
 
+
+  @stepHeaderMarginTop: 32px;
+  @stepHeaderMarginBottom: 25px;
+  @stepHeaderTitleFontSize: 18px;
+  @stepHeaderDescriptionFontSize: 16px;
+  @stepHeaderLineHeight: 1.42;
   .step-header {
     background-color: @whiteColor;
     //position: absolute;
     //width: 100%;
+
+    .title {
+      margin-top: @stepHeaderMarginTop;
+      margin-bottom: 5px;
+      .sourceSansProFont(600, @stepHeaderTitleFontSize);
+      line-height: @stepHeaderLineHeight;
+    }
+    .description {
+      .sourceSansProFont(400, @stepHeaderDescriptionFontSize);
+      margin-bottom: @stepHeaderMarginBottom;
+      line-height: @stepHeaderLineHeight;
+    }
   }
 
   .btn {
@@ -19,6 +37,11 @@
     &.next-step, &.btn-empty-black {
       .gothamBoldFont(14px);
       padding: 11px 26px;
+
+      .caret {
+        border-width: 8px;
+        margin-left: 10px;
+      }
     }
   }
 
@@ -31,22 +54,16 @@
     margin-right: 15px;
   }
 
-  .title {
-    margin-top: 32px;
-    margin-bottom: 5px;
-    .sourceSansProFont(600, 18px);
-  }
   .section-title {
     .sourceSansProFont(600, 16px);
     color: @darkGrayColor;
   }
-  .description {
-    .sourceSansProFont(400, 16px);
-    margin-bottom: 25px;
-  }
   .step-content {
+    //padding-top: (@stepHeaderMarginBottom + @stepHeaderMarginTop + @stepHeaderLineHeight*@stepHeaderTitleFontSize +
+    //              @stepHeaderLineHeight*@stepHeaderDescriptionFontSize) + 45px;
     padding-top: 45px;
     padding-bottom: 45px;
+
     background-color: @extraLightGrayColor;
     .sourceSansProFont(400, 16px);
     color: @darkGrayColor;
