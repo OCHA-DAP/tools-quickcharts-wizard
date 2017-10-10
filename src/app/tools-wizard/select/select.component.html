@@ -18,10 +18,10 @@
       <div class="radio-selection">
         <div class="radio-title">Recipe options:</div>
         <label for="recipe-opt-hdx">
-          <input type="radio" name="data-source" value="sample" id="recipe-opt-hdx" (change)="changeRecipe($event);" [checked]="recipeSample">HDX Quick Charts Recipes <br>(See <a>a list of 100+ recipes</a>)
+          <input type="radio" name="data-source" value="sample" id="recipe-opt-hdx" (change)="changeRecipe($event);" [checked]="getWizardConfig().step2Sample">HDX Quick Charts Recipes <br>(See <a>a list of 100+ recipes</a>)
         </label>
         <label for="recipe-opt-custom">
-          <input type="radio" name="data-source" value="url" id="recipe-opt-custom" (change)="changeRecipe($event);" [checked]="!recipeSample"> Custom Recipes <br>
+          <input type="radio" name="data-source" value="url" id="recipe-opt-custom" (change)="changeRecipe($event);" [checked]="!getWizardConfig().step2Sample"> Custom Recipes <br>
           (Bring your own json file to create custom charts. Read <a>documentation</a> to learn more)
           <ul>
             <li>
@@ -39,10 +39,10 @@
       </div>
     </div>
     <div class="col-xs-9 recipe-results">
-      <div class="row" *ngIf="!recipeSample">
+      <div class="row" *ngIf="!getWizardConfig().step2Sample">
           <div class="source-custom-url">
             <label for="source-custom-recipe-url-field">Enter URL</label>
-            <input [(ngModel)]="selectedRecipeUrl" name="selectedRecipeUrl" class="wizard-input" id="source-custom-recipe-url-field" placeholder="eg. http://example.com/population-jan-2011.json">
+            <input [ngModel]="getWizardConfig().recipeUrl" (change)="recipeUrlChanged($event)" name="selectedRecipeUrl" class="wizard-input" id="source-custom-recipe-url-field" placeholder="eg. http://example.com/population-jan-2011.json">
           </div>
       </div>
       <div class="row">

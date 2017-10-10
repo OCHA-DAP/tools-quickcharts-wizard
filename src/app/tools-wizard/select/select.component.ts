@@ -1,3 +1,4 @@
+import { WizardConfigData } from './../../types/wizard-config-data';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -15,9 +16,6 @@ import 'rxjs/Rx';
 })
 export class SelectComponent implements OnInit {
 
-  selectedRecipeUrl = 'https://raw.githubusercontent.com/OCHA-DAP/hdx-hxl-preview/master/src/assets/bites.json';
-  recipeSample = true;
-
   keyfigureBites: Bite[] = [];
   chartBites: Bite[] = [];
   timeseriesBites: Bite[] = [];
@@ -28,22 +26,32 @@ export class SelectComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       const url = params.get('url');
-      this.fetchAvailableBites(url);
+      if (url) {
+        this.wizardConfigService.getWizardConfigData().url = url;
+      }
+      const recipeUrl = params.get('recipeUrl');
+      if (recipeUrl) {
+        this.wizardConfigService.getWizardConfigData().recipeUrl = recipeUrl;
+      }
+      this.fetchAvailableBites();
     });
   }
 
   changeRecipe($event) {
-    this.recipeSample = $event.target.value === 'sample';
+    this.getWizardConfig().step2Sample = $event.target.value === 'sample';
+    if (this.getWizardConfig().step2Sample) {
+      this.updateSelectedRecipeUrl(new WizardConfigData().recipeUrl);
+    }
+  }
+  recipeUrlChanged($event) {
+    this.updateSelectedRecipeUrl($event.target.value);
   }
 
-  private fetchAvailableBites(url: string) {
+  fetchAvailableBites() {
     this.resetData();
-    if (url) {
-      this.wizardConfigService.getWizardConfigData().url = url;
-    }
 
     this.cookBookService.load(this.wizardConfigService.getWizardConfigData().url,
-      this.selectedRecipeUrl).subscribe((bite: Bite) => {
+      this.getWizardConfig().recipeUrl).subscribe((bite: Bite) => {
         switch (bite.type) {
           case KeyFigureBite.type():
             this.timeseriesBites.push(bite);
@@ -66,19 +74,29 @@ export class SelectComponent implements OnInit {
     this.timeseriesBites = [];
   }
 
+  getWizardConfig() {
+    return this.wizardConfigService.getWizardConfigData();
+  }
+
   totalBites(): number {
     return this.keyfigureBites.length + this.chartBites.length + this.timeseriesBites.length;
   }
 
-  updateSelectedRecipeUrl(newUrl: string) {
-    this.selectedRecipeUrl = newUrl;
-    this.fetchAvailableBites(this.wizardConfigService.getWizardConfigData().url);
+  updateSelectedRecipeUrl(newUrl: string, isSampleUrl?: boolean) {
+    // console.log(`Updating url to ${newUrl} -- was ${this.getWizardConfig().recipeUrl}`);
+    if (this.getWizardConfig().recipeUrl !== newUrl) {
+      this.getWizardConfig().recipeUrl = newUrl;
+      this.fetchAvailableBites();
+    }
+    if (!isSampleUrl) {
+      this.getWizardConfig().step2Sample = false;
+    }
   }
 
   navigateToShare() {
     this.router.navigate(['/share', {
-      'url': this.wizardConfigService.getWizardConfigData().url,
-      'recipeUrl': this.selectedRecipeUrl
+      'url': this.getWizardConfig().url,
+      'recipeUrl': this.getWizardConfig().recipeUrl
     }]);
   }
 
