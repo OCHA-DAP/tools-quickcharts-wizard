@@ -68,7 +68,11 @@ export class GooglepickerDirective {
       let url = '';
       if (data[google.picker.Response.ACTION] === google.picker.Action.PICKED) {
         const doc = data[google.picker.Response.DOCUMENTS][0];
-        url = 'https://drive.google.com/uc?export=download&id=' + doc[google.picker.Document.ID];
+        if (doc[google.picker.Document.MIME_TYPE] === 'application/vnd.google-apps.spreadsheet') {
+          url = `https://docs.google.com/spreadsheets/d/${doc[google.picker.Document.ID]}/export?format=csv`;
+        } else {
+          url = `https://drive.google.com/uc?export=download&id=${doc[google.picker.Document.ID]}`;
+        }
       }
       const message = 'You picked: ' + url;
       console.log(message);
