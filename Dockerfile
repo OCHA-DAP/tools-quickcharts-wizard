@@ -3,14 +3,16 @@ FROM alpine:3.6 AS builder
 ENV NPM_CONFIG_PROGRESS=false \
     NPM_CONFIG_SPIN=false
 
+WORKDIR /srv/wizard
+
+COPY . .
+
 RUN apk add --update-cache \
         nodejs \
         nodejs-npm \
         git \
         curl \
         nano && \
-    git clone https://github.com/OCHA-DAP/tools-wizard.git /srv/wizard && \
-    cd /srv/wizard && \
     npm install -g @angular/cli && \
     npm install && \
     ng build --prod -bh /wizard/
