@@ -47,7 +47,7 @@ export class HttpService extends Http {
       });
   }
 
-  private turnOnModal() {
+  public turnOnModal() {
     this.pendingRequests++;
     // console.log('In the turn on: ' + this.pendingRequests);
     if (!this.showLoading) {
@@ -57,7 +57,7 @@ export class HttpService extends Http {
     this.changeShowLoading(true);
   }
 
-  private turnOffModal() {
+  public turnOffModal() {
     if (this.pendingRequests > 0) {
       this.pendingRequests--;
     }

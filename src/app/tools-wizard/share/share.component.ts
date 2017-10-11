@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
+import { Http } from '@angular/http';
+import { HttpService } from '../../shared/http.service';
 
 @Component({
   selector: 'app-share',
@@ -9,6 +11,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./share.component.less']
 })
 export class ShareComponent implements OnInit {
+  httpService: HttpService;
   embedUrl: string = null;
   iFrameUrl: SafeResourceUrl = null;
   dataSource: string = null;
@@ -16,13 +19,15 @@ export class ShareComponent implements OnInit {
   @ViewChild('embedCode')
   private embedCode;
 
-  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, public location: Location) {
+  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, public location: Location, http: Http) {
+    this.httpService = <HttpService> http;
   }
 
   iFrameLoaded() {
     if (this.iFrameUrl) {
       console.log('iFrame loaded!');
       this.getEmbedUrl();
+      this.httpService.turnOffModal();
     }
   }
 
@@ -66,6 +71,7 @@ export class ShareComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
+      this.httpService.turnOnModal();
       const urlParam = params.get('url');
       const url = encodeURIComponent(urlParam);
       const recipeUrl = encodeURIComponent(params.get('recipeUrl'));

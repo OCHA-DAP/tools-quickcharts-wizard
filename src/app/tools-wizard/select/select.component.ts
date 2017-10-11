@@ -8,6 +8,8 @@ import { WizardConfigService } from './../../wizard-config.service';
 import { GooglepickerDirective } from './../../common/googlepicker.directive';
 import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';
 import 'rxjs/Rx';
+import { HttpService } from '../../shared/http.service';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'app-select',
@@ -19,12 +21,16 @@ export class SelectComponent implements OnInit {
   keyfigureBites: Bite[] = [];
   chartBites: Bite[] = [];
   timeseriesBites: Bite[] = [];
+  private httpService: HttpService;
 
   constructor(private router: Router, private route: ActivatedRoute,
-      private cookBookService: CookBookService, private wizardConfigService: WizardConfigService) { }
+      private cookBookService: CookBookService, private wizardConfigService: WizardConfigService, http: Http) {
+    this.httpService = <HttpService> http;
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
+      this.httpService.turnOnModal();
       const url = params.get('url');
       if (url) {
         this.wizardConfigService.getWizardConfigData().url = url;
@@ -63,6 +69,7 @@ export class SelectComponent implements OnInit {
             this.keyfigureBites.push(bite);
             break;
         }
+        // this.httpService.turnOffModal();
       });
 
     // this.totalNumOfBites = 2;
