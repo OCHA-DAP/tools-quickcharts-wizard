@@ -25,4 +25,6 @@ RUN apk add --update nginx && \
 COPY ./docker/default.conf /etc/nginx/conf.d/
 COPY --from=builder /srv/wizard/dist /var/www
 
+EXPOSE 80
+
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
