@@ -15,7 +15,7 @@ RUN apk add --update-cache \
         nano && \
     npm install -g @angular/cli && \
     npm install && \
-    ng build --prod -bh /wizard/quickchart
+    ng build --prod -bh /wizard/quickcharts
 
 FROM alpine:3.6
 
