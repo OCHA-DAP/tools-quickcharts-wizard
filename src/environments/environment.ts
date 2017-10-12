@@ -6,4 +6,5 @@
 export const environment = {
   production: false,
   hxlProxy: 'https://proxy.hxlstandard.org/data.json',
+  hxlPreview: 'http://localhost:4201/'
 };

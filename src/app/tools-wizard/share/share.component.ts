@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Http } from '@angular/http';
 import { HttpService } from '../../shared/http.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-share',
@@ -53,7 +54,7 @@ export class ShareComponent implements OnInit {
   getEmbedUrl() {
     const origin = window.location.origin;
     const iFrame: HTMLIFrameElement = <HTMLIFrameElement> document.getElementById('quick-charts-iframe');
-    const iFrameOrigin = 'http://localhost:4201/';
+    const iFrameOrigin = environment.hxlPreview;
     iFrame.contentWindow.window.postMessage(`getEmbedUrl: ${origin}`, iFrameOrigin);
   }
 
@@ -77,7 +78,8 @@ export class ShareComponent implements OnInit {
       const recipeUrl = encodeURIComponent(params.get('recipeUrl'));
       this.dataSource = urlParam;
 
-      const newUrl = `http://localhost:4201/show;url=${url};recipeUrl=${recipeUrl};toolsMode=true`;
+      const hxlPreviewUrl = environment.hxlPreview;
+      const newUrl = `${hxlPreviewUrl}/show;url=${url};recipeUrl=${recipeUrl};toolsMode=true`;
       this.embedUrl = newUrl;
       this.iFrameUrl = this.sanitizer.bypassSecurityTrustResourceUrl(newUrl);
     });
