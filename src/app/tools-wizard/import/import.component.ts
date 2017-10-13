@@ -10,7 +10,7 @@ import { WizardConfigService } from './../../wizard-config.service';
   styleUrls: ['./import.component.less']
 })
 export class ImportComponent implements OnInit {
-  selectedUrl = '';
+  _selectedUrl = '';
   sampleData = [
     {
       'id': 'c7fb99a5-43ec-4b3f-b8db-935640c75aeb',
@@ -82,8 +82,17 @@ export class ImportComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private wizardConfigService: WizardConfigService) { }
 
+  get selectedUrl() {
+    return this._selectedUrl;
+  }
+
+  set selectedUrl(selectedUrl: string) {
+    this.getWizardConfig().hxlCheckError = null;
+    this._selectedUrl = selectedUrl;
+  }
+
   ngOnInit() {
-    this.selectedUrl = this.getWizardConfig().url ? this.getWizardConfig().url : this.sampleData[0].url;
+    this._selectedUrl = this.getWizardConfig().url ? this.getWizardConfig().url : this.sampleData[0].url;
     this.route.paramMap.subscribe((params: ParamMap) => {
       const url = params.get('url');
       if (url) {
