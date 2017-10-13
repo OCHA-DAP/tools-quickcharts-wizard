@@ -4,6 +4,7 @@ import { environment } from './../../environments/environment';
 import { Http } from '@angular/http';
 import { HttpService } from '../shared/http.service';
 import { Observable } from 'rxjs/Observable';
+import { HxlCheckService } from './../common/hxl-check.service';
 
 @Component({
   selector: 'hdx-tools-wizard',
@@ -14,7 +15,7 @@ export class ToolsWizardComponent implements OnInit {
   loadingStatus = false;
   private httpService: HttpService;
 
-  constructor(private hxlProxyService: HxlproxyService, http: Http) {
+  constructor(private hxlProxyService: HxlproxyService, http: Http, private hxlCheckService: HxlCheckService) {
     this.httpService = <HttpService> http;
   }
 
@@ -23,6 +24,8 @@ export class ToolsWizardComponent implements OnInit {
       'hxlProxy': environment['hxlProxy'],
       'noCachedMetarows': true
     });
+
+    this.hxlCheckService.init(environment['hxlCheck']);
 
     this.httpService.loadingChange.distinctUntilChanged().debounce(val => Observable.timer(val ? 100 : 300)).subscribe((value) => {
       this.loadingStatus = value;
