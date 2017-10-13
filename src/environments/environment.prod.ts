@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   hxlProxy: '/hxlproxy/data.json',
-  hxlPreview: '/quickchart/app'
+  hxlPreview: '/quickcharts/app'
 };
