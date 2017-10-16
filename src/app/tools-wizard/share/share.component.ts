@@ -54,7 +54,10 @@ export class ShareComponent implements OnInit {
   getEmbedUrl() {
     const origin = window.location.origin;
     const iFrame: HTMLIFrameElement = <HTMLIFrameElement> document.getElementById('quick-charts-iframe');
-    const iFrameOrigin = environment.hxlPreview;
+    let iFrameOrigin = environment.hxlPreview;
+    if (!iFrameOrigin.startsWith('http')) {
+      iFrameOrigin = origin + iFrameOrigin;
+    }
     iFrame.contentWindow.window.postMessage(`getEmbedUrl: ${origin}`, iFrameOrigin);
   }
 
