@@ -27,7 +27,6 @@ export class GooglepickerDirective {
 
   @HostListener('click')
   loadGooglePicker() {
-    console.log('AAAAA');
     let picker = null;
     const onAuthApiLoad = function () {
       gapi.auth.authorize(
