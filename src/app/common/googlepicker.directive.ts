@@ -9,12 +9,11 @@ declare const google: any;
 export class GooglepickerDirective {
 
   // The Browser API key obtained from the Google API Console.
-  readonly developerKey = 'AIzaSyAFWbZlgf6DUdmLxrypnZs1K7_VJJenqH0';
+  readonly developerKey = 'AIzaSyDOGprh9-MkMZ7zCWIhrqbVwkyNCEFofmo';
 
-  // The Client ID obtained from the Google API Console. Replace with your own Client ID.
-  readonly clientId = '838107907608-ki8i6mus7o19ohv8oigutjej5om1p90h.apps.googleusercontent.com';
+  // The Client ID obtained from the Google API Console.
+  readonly clientId = '378410536565-kn14q1b73co95gfcuqpd2qmrtqpca13c.apps.googleusercontent.com';
 
-  // Scope to use to access user's photos.
   readonly scope = ['https://www.googleapis.com/auth/drive.readonly'];
 
   pickerApiLoaded = false;
