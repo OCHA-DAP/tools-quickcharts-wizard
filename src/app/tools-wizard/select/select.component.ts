@@ -11,6 +11,7 @@ import 'rxjs/Rx';
 import { HttpService } from '../../shared/http.service';
 import { Http } from '@angular/http';
 import { HxlCheckService, HxlCheckResponse } from './../../common/hxl-check.service';
+import { AnalyticsService } from './../../common/analytics.service';
 
 @Component({
   selector: 'app-select',
@@ -19,6 +20,8 @@ import { HxlCheckService, HxlCheckResponse } from './../../common/hxl-check.serv
 })
 export class SelectComponent implements OnInit {
 
+  readonly stepName = '2. Select Recipe';
+
   keyfigureBites: Bite[] = [];
   chartBites: Bite[] = [];
   timeseriesBites: Bite[] = [];
@@ -26,7 +29,7 @@ export class SelectComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute,
       private cookBookService: CookBookService, private wizardConfigService: WizardConfigService, http: Http,
-      private hxlCheckService: HxlCheckService) {
+      private hxlCheckService: HxlCheckService, private analyticsService: AnalyticsService) {
     this.httpService = <HttpService> http;
   }
 
@@ -43,6 +46,8 @@ export class SelectComponent implements OnInit {
       }
       this.fetchAvailableBites();
     });
+
+    this.analyticsService.trackStepLoad(this.stepName, false, false, this.getWizardConfig().url, this.getWizardConfig().recipeUrl);
   }
 
   changeRecipe($event) {
