@@ -23,6 +23,7 @@ export class AnalyticsService {
             dataSourceUrl?: string, recipeUrl?: string) {
 
     const mpData = {
+      'workflow': 'quickcharts',
       'step name': stepName,
       'first step': firstStep,
       'last step': lastStep,
