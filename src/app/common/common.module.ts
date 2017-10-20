@@ -3,6 +3,7 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { GooglepickerDirective } from './googlepicker.directive';
 import { DropboxchooserDirective } from './dropboxchooser.directive';
 import { HxlCheckService } from './hxl-check.service';
+import { AnalyticsService } from './analytics.service';
 
 @NgModule({
   imports: [
@@ -10,6 +11,6 @@ import { HxlCheckService } from './hxl-check.service';
   ],
   declarations: [GooglepickerDirective, DropboxchooserDirective],
   exports: [GooglepickerDirective, DropboxchooserDirective],
-  providers: [HxlCheckService]
+  providers: [HxlCheckService, AnalyticsService]
 })
 export class CommonModule { }

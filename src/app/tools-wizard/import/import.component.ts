@@ -3,13 +3,16 @@ import { GooglepickerDirective } from './../../common/googlepicker.directive';
 import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { WizardConfigService } from './../../wizard-config.service';
-
+import { AnalyticsService } from './../../common/analytics.service';
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
   styleUrls: ['./import.component.less']
 })
 export class ImportComponent implements OnInit {
+
+  readonly stepName = '1. Import Data';
+
   _selectedUrl = '';
   sampleData = [
     {
@@ -80,7 +83,9 @@ export class ImportComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute, private wizardConfigService: WizardConfigService) { }
+
+  constructor(private router: Router, private route: ActivatedRoute,
+                private wizardConfigService: WizardConfigService, private analyticsService: AnalyticsService) { }
 
   get selectedUrl() {
     return this._selectedUrl;
@@ -103,6 +108,8 @@ export class ImportComponent implements OnInit {
         this.wizardConfigService.getWizardConfigData().recipeUrl = recipeUrl;
       }
     });
+
+    this.analyticsService.trackStepLoad(this.stepName, true, false, this.getWizardConfig().url, this.getWizardConfig().recipeUrl);
   }
 
   getWizardConfig() {
