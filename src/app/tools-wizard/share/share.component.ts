@@ -67,12 +67,12 @@ export class ShareComponent implements OnInit {
     iFrame.contentWindow.window.postMessage(`getEmbedUrl: ${origin}`, iFrameOrigin);
   }
 
-  prepareShare($event) {
+  prepareShare($event, scrollto = false) {
     const element = $event.target;
     this.embedUrl = '';
     // element.setSelectionRange(0, 0);
     // element.setSelectionRange(0, element.value.length);
-
+    element.scrollIntoView();
     setTimeout(() => {
       this.getEmbedUrl();
     }, 2);
