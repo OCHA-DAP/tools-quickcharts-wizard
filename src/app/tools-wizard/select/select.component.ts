@@ -66,12 +66,14 @@ export class SelectComponent implements OnInit {
     const bitesObs = this.cookBookService.load(this.getWizardConfig().url,
       this.getWizardConfig().recipeUrl);
 
-    checkObs.subscribe( (checkResult: HxlCheckResponse) => {
-      if (!checkResult.status) {
-        this.getWizardConfig().hxlCheckError = 'HXL tags were not detected on the selected resource';
-        this.router.navigate(['/import']);
-      }
-    });
+      checkObs.subscribe( (checkResult: HxlCheckResponse) => {
+        if (!checkResult.status) {
+          this.getWizardConfig().hxlCheckError = 'HXL tags were not detected on the selected resource. \
+                        Choose another resource with hxl tags or learn how to add tags by seeing examples on \
+                      <a target="_blank" href="http://tools.humdata.org/examples/hxl/"> http://tools.humdata.org/examples/hxl/ </a>';
+          this.router.navigate(['/import']);
+        }
+      });
 
     bitesObs.subscribe( (bite: Bite) => {
       switch (bite.type) {
