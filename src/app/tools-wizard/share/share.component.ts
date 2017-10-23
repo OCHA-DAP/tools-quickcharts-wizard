@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { Http } from '@angular/http';
 import { HttpService } from '../../shared/http.service';
 import { environment } from '../../../environments/environment';
+import { WizardConfigService } from './../../wizard-config.service';
+import { AnalyticsService } from './../../common/analytics.service';
 
 @Component({
   selector: 'app-share',
@@ -12,6 +14,9 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./share.component.less']
 })
 export class ShareComponent implements OnInit {
+
+  readonly stepName = '3. Share dashboard';
+
   httpService: HttpService;
   embedUrl: string = null;
   iFrameUrl: SafeResourceUrl = null;
@@ -20,7 +25,8 @@ export class ShareComponent implements OnInit {
   @ViewChild('embedCode')
   private embedCode;
 
-  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, public location: Location, http: Http) {
+  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, public location: Location, http: Http,
+              private wizardConfigService: WizardConfigService, private analyticsService: AnalyticsService) {
     this.httpService = <HttpService> http;
   }
 
@@ -54,16 +60,19 @@ export class ShareComponent implements OnInit {
   getEmbedUrl() {
     const origin = window.location.origin;
     const iFrame: HTMLIFrameElement = <HTMLIFrameElement> document.getElementById('quick-charts-iframe');
-    const iFrameOrigin = environment.hxlPreview;
+    let iFrameOrigin = environment.hxlPreview;
+    if (!iFrameOrigin.startsWith('http')) {
+      iFrameOrigin = origin + iFrameOrigin;
+    }
     iFrame.contentWindow.window.postMessage(`getEmbedUrl: ${origin}`, iFrameOrigin);
   }
 
-  prepareShare($event) {
+  prepareShare($event, scrollto = false) {
     const element = $event.target;
     this.embedUrl = '';
     // element.setSelectionRange(0, 0);
     // element.setSelectionRange(0, element.value.length);
-
+    element.scrollIntoView();
     setTimeout(() => {
       this.getEmbedUrl();
     }, 2);
@@ -83,6 +92,11 @@ export class ShareComponent implements OnInit {
       this.embedUrl = newUrl;
       this.iFrameUrl = this.sanitizer.bypassSecurityTrustResourceUrl(newUrl);
     });
+    this.analyticsService.trackStepLoad(this.stepName, false, true, this.getWizardConfig().url, this.getWizardConfig().recipeUrl);
+  }
+
+  getWizardConfig() {
+    return this.wizardConfigService.getWizardConfigData();
   }
 
 }

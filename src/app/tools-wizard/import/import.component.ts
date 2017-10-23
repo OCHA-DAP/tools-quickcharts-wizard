@@ -3,14 +3,17 @@ import { GooglepickerDirective } from './../../common/googlepicker.directive';
 import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { WizardConfigService } from './../../wizard-config.service';
-
+import { AnalyticsService } from './../../common/analytics.service';
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
   styleUrls: ['./import.component.less']
 })
 export class ImportComponent implements OnInit {
-  selectedUrl = '';
+
+  readonly stepName = '1. Import Data';
+
+  _selectedUrl = '';
   sampleData = [
     {
       'id': 'c7fb99a5-43ec-4b3f-b8db-935640c75aeb',
@@ -80,10 +83,21 @@ export class ImportComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute, private wizardConfigService: WizardConfigService) { }
+
+  constructor(private router: Router, private route: ActivatedRoute,
+                private wizardConfigService: WizardConfigService, private analyticsService: AnalyticsService) { }
+
+  get selectedUrl() {
+    return this._selectedUrl;
+  }
+
+  set selectedUrl(selectedUrl: string) {
+    this.getWizardConfig().hxlCheckError = null;
+    this._selectedUrl = selectedUrl;
+  }
 
   ngOnInit() {
-    this.selectedUrl = this.getWizardConfig().url ? this.getWizardConfig().url : this.sampleData[0].url;
+    this._selectedUrl = this.getWizardConfig().url ? this.getWizardConfig().url : this.sampleData[0].url;
     this.route.paramMap.subscribe((params: ParamMap) => {
       const url = params.get('url');
       if (url) {
@@ -94,6 +108,8 @@ export class ImportComponent implements OnInit {
         this.wizardConfigService.getWizardConfigData().recipeUrl = recipeUrl;
       }
     });
+
+    this.analyticsService.trackStepLoad(this.stepName, true, false, this.getWizardConfig().url, this.getWizardConfig().recipeUrl);
   }
 
   getWizardConfig() {

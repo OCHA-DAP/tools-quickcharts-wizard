@@ -2,21 +2,26 @@
   <div class="paddingRowHack step-header">
     <div class="paddingLeftHack paddingRightHack">
       <div class="row" style="position: relative;">
-        <div class="col-xs-10">
-          <div class="title">3. Share dashboard</div>
+        <div class="col-xs-9">
+          <div class="title">{{stepName}}</div>
           <div class="description">Choose 3 default charts to display from the dropdown. Share Quick Charts for publication.</div>
         </div>
-        <span class="btn-actions">
-          <button routerLink="/select" class="btn btn-empty-black">Previous</button>
-          <button id="share-action-btn" class="btn btn-primary next-step dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Share <span class="caret"></span></button>
-        </span>
-        <ul class="dropdown-menu" aria-labelledby="share-action-btn">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
+        <div class="col-xs-3">
+          <div class="btn-actions">
+            <button routerLink="/select" class="btn btn-empty-black">Previous</button>
+            <div class="btn-group" dropdown>
+              <button dropdownToggle type="button" class="btn btn-primary next-step dropdown-toggle">
+                Share <span class="caret"></span>
+              </button>
+              <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+                <li role="menuitem"><a class="dropdown-item" href disabled="disabled">Download as image</a></li>
+                <li role="menuitem"><a class="dropdown-item" (click)="embedCode.scrollIntoView();">Embed</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </div>
   </div>

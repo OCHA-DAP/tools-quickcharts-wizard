@@ -9,12 +9,11 @@ declare const google: any;
 export class GooglepickerDirective {
 
   // The Browser API key obtained from the Google API Console.
-  readonly developerKey = 'AIzaSyAFWbZlgf6DUdmLxrypnZs1K7_VJJenqH0';
+  readonly developerKey = 'AIzaSyDOGprh9-MkMZ7zCWIhrqbVwkyNCEFofmo';
 
-  // The Client ID obtained from the Google API Console. Replace with your own Client ID.
-  readonly clientId = '838107907608-ki8i6mus7o19ohv8oigutjej5om1p90h.apps.googleusercontent.com';
+  // The Client ID obtained from the Google API Console.
+  readonly clientId = '378410536565-kn14q1b73co95gfcuqpd2qmrtqpca13c.apps.googleusercontent.com';
 
-  // Scope to use to access user's photos.
   readonly scope = ['https://www.googleapis.com/auth/drive.readonly'];
 
   pickerApiLoaded = false;
@@ -28,7 +27,6 @@ export class GooglepickerDirective {
 
   @HostListener('click')
   loadGooglePicker() {
-    console.log('AAAAA');
     let picker = null;
     const onAuthApiLoad = function () {
       gapi.auth.authorize(
@@ -68,7 +66,11 @@ export class GooglepickerDirective {
       let url = '';
       if (data[google.picker.Response.ACTION] === google.picker.Action.PICKED) {
         const doc = data[google.picker.Response.DOCUMENTS][0];
-        url = 'https://drive.google.com/uc?export=download&id=' + doc[google.picker.Document.ID];
+        if (doc[google.picker.Document.MIME_TYPE] === 'application/vnd.google-apps.spreadsheet') {
+          url = `https://docs.google.com/spreadsheets/d/${doc[google.picker.Document.ID]}/export?format=csv`;
+        } else {
+          url = `https://drive.google.com/uc?export=download&id=${doc[google.picker.Document.ID]}`;
+        }
       }
       const message = 'You picked: ' + url;
       console.log(message);

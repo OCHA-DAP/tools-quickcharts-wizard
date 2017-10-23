@@ -3,7 +3,7 @@
     <div class="paddingLeftHack paddingRightHack">
       <div class="row" style="position: relative;">
         <div class="col-xs-10">
-          <div class="title">1. Import Data</div>
+          <div class="title">{{stepName}}</div>
           <div class="description">Import a spreadsheet or csv file via a URL of from the cloud. Supported format: <strong>csv, xls and xlsx</strong></div>
         </div>
         <span class="btn-actions">
@@ -38,6 +38,7 @@
       </div>
     </div>
     <div *ngIf="getWizardConfig().step1Sample" class="col-xs-9 source-sample-data">
+      <div *ngIf="getWizardConfig().hxlCheckError" class="alert alert-danger" role="alert" [innerHTML]="getWizardConfig().hxlCheckError"></div>
       <label *ngFor="let s of sampleData" class="sample-item active">
         <input name="sample-data-selection" value="{{ s.url }}" type="radio" [checked]=" (s.url === selectedUrl) ? true : null" (change)="changeSampleUrl(s.url);">
         <span class="sample-content">
@@ -54,6 +55,7 @@
       </label>
     </div>
     <div *ngIf="!getWizardConfig().step1Sample" class="col-xs-9 source-custom-url">
+      <div *ngIf="getWizardConfig().hxlCheckError" class="alert alert-danger" role="alert">{{ getWizardConfig().hxlCheckError }}</div>
       <label for="source-custom-url-field">Enter URL</label>
       <input [(ngModel)]="selectedUrl" name="selectedUrl" class="wizard-input" id="source-custom-url-field" placeholder="eg. http://example.com/population-jan-2011.json">
     </div>

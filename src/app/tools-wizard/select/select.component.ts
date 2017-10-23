@@ -10,6 +10,8 @@ import { DropboxchooserDirective } from './../../common/dropboxchooser.directive
 import 'rxjs/Rx';
 import { HttpService } from '../../shared/http.service';
 import { Http } from '@angular/http';
+import { HxlCheckService, HxlCheckResponse } from './../../common/hxl-check.service';
+import { AnalyticsService } from './../../common/analytics.service';
 
 @Component({
   selector: 'app-select',
@@ -18,13 +20,16 @@ import { Http } from '@angular/http';
 })
 export class SelectComponent implements OnInit {
 
+  readonly stepName = '2. Select Recipe';
+
   keyfigureBites: Bite[] = [];
   chartBites: Bite[] = [];
   timeseriesBites: Bite[] = [];
   private httpService: HttpService;
 
   constructor(private router: Router, private route: ActivatedRoute,
-      private cookBookService: CookBookService, private wizardConfigService: WizardConfigService, http: Http) {
+      private cookBookService: CookBookService, private wizardConfigService: WizardConfigService, http: Http,
+      private hxlCheckService: HxlCheckService, private analyticsService: AnalyticsService) {
     this.httpService = <HttpService> http;
   }
 
@@ -41,6 +46,8 @@ export class SelectComponent implements OnInit {
       }
       this.fetchAvailableBites();
     });
+
+    this.analyticsService.trackStepLoad(this.stepName, false, false, this.getWizardConfig().url, this.getWizardConfig().recipeUrl);
   }
 
   changeRecipe($event) {
@@ -55,24 +62,32 @@ export class SelectComponent implements OnInit {
 
   fetchAvailableBites() {
     this.resetData();
+    const checkObs = this.hxlCheckService.check(this.getWizardConfig().url);
+    const bitesObs = this.cookBookService.load(this.getWizardConfig().url,
+      this.getWizardConfig().recipeUrl);
 
-    this.cookBookService.load(this.wizardConfigService.getWizardConfigData().url,
-      this.getWizardConfig().recipeUrl).subscribe((bite: Bite) => {
-        switch (bite.type) {
-          case KeyFigureBite.type():
-            this.timeseriesBites.push(bite);
-            break;
-          case ChartBite.type():
-            this.chartBites.push(bite);
-            break;
-          case TimeseriesChartBite.type():
-            this.keyfigureBites.push(bite);
-            break;
+      checkObs.subscribe( (checkResult: HxlCheckResponse) => {
+        if (!checkResult.status) {
+          this.getWizardConfig().hxlCheckError = 'HXL tags were not detected on the selected resource. \
+                        Choose another resource with hxl tags or learn how to add tags by seeing examples on \
+                      <a target="_blank" href="http://tools.humdata.org/examples/hxl/"> http://tools.humdata.org/examples/hxl/ </a>';
+          this.router.navigate(['/import']);
         }
-        // this.httpService.turnOffModal();
       });
 
-    // this.totalNumOfBites = 2;
+    bitesObs.subscribe( (bite: Bite) => {
+      switch (bite.type) {
+        case KeyFigureBite.type():
+          this.timeseriesBites.push(bite);
+          break;
+        case ChartBite.type():
+          this.chartBites.push(bite);
+          break;
+        case TimeseriesChartBite.type():
+          this.keyfigureBites.push(bite);
+          break;
+      }
+    });
   }
 
   private resetData() {
