@@ -49,6 +49,8 @@ export class ShareComponent implements OnInit {
         // const parentOrigin = window.parent.location.href;
         console.log(`EMBED URL: ${url}`);
         this.embedUrl = url;
+        this.embedCode.nativeElement.focus();
+        this.embedCode.nativeElement.setSelectionRange(0, 0);
         setTimeout(() => {
           this.embedCode.nativeElement.setSelectionRange(0, this.embedCode.nativeElement.value.length);
         }, 2);
