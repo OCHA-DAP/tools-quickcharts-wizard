@@ -48,12 +48,15 @@ export class ShareComponent implements OnInit {
         const url: string = action.slice(EMBED_URL.length);
         // const parentOrigin = window.parent.location.href;
         console.log(`EMBED URL: ${url}`);
+        const initMode = this.embedUrl == null;
         this.embedUrl = url;
-        this.embedCode.nativeElement.focus();
-        this.embedCode.nativeElement.setSelectionRange(0, 0);
-        setTimeout(() => {
-          this.embedCode.nativeElement.setSelectionRange(0, this.embedCode.nativeElement.value.length);
-        }, 2);
+        if (!initMode) {
+          this.embedCode.nativeElement.focus();
+          this.embedCode.nativeElement.setSelectionRange(0, 0);
+          setTimeout(() => {
+            this.embedCode.nativeElement.setSelectionRange(0, this.embedCode.nativeElement.value.length);
+          }, 2);
+        }
         return;
       }
     }
@@ -74,7 +77,7 @@ export class ShareComponent implements OnInit {
     this.embedUrl = '';
     // element.setSelectionRange(0, 0);
     // element.setSelectionRange(0, element.value.length);
-    element.scrollIntoView();
+    element.scrollIntoView({behavior: 'smooth', block: 'end'});
     setTimeout(() => {
       this.getEmbedUrl();
     }, 2);
@@ -91,7 +94,6 @@ export class ShareComponent implements OnInit {
 
       const hxlPreviewUrl = environment.hxlPreview;
       const newUrl = `${hxlPreviewUrl}/show;url=${url};recipeUrl=${recipeUrl};toolsMode=true`;
-      this.embedUrl = newUrl;
       this.iFrameUrl = this.sanitizer.bypassSecurityTrustResourceUrl(newUrl);
     });
     this.analyticsService.trackStepLoad(this.stepName, false, true, this.getWizardConfig().url, this.getWizardConfig().recipeUrl);
