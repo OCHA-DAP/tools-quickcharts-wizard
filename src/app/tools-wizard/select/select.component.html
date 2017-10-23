@@ -24,7 +24,7 @@
         </label>
         <label for="recipe-opt-custom">
           <input type="radio" name="data-source" value="url" id="recipe-opt-custom" (change)="changeRecipe($event);" [checked]="!getWizardConfig().step2Sample"> Custom Recipes <br>
-          (Bring your own json file to create custom charts. Read <a>documentation</a> to learn more)
+          (Bring your own json file to create custom charts. Read <a target="_blank" href="https://github.com/OCHA-DAP/hxl-recipes">documentation</a> to learn more)
           <ul>
             <li>
               <a href="javascript:void(0)" hdxDropboxchooser (urlSelect)="updateSelectedRecipeUrl($event)">
