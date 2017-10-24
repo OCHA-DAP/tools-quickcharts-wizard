@@ -59,9 +59,7 @@
         <div class="col-xs-9">
           <div><span class="section-title">Embed (Live charts):</span> if you embed - charts will be live and always reflect the latest data from the source.</div>
           <div>
-            <textarea id="embedCode" #embedCode class="wizard-input" (click)="prepareShare($event)" readonly>
-              {{ embedUrl }}
-            </textarea>
+            <textarea id="embedCode" #embedCode class="wizard-input" (click)="prepareShare($event)" readonly [innerText]="embedUrl"></textarea>
           </div>
         </div>
       </div>
