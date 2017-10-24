@@ -2,11 +2,11 @@
   <div class="paddingRowHack step-header">
     <div class="paddingLeftHack paddingRightHack">
       <div class="row" style="position: relative;">
-        <div class="col-xs-9">
+        <div class="col-xs-8">
           <div class="title">{{stepName}}</div>
-          <div class="description">Chart recipes determine what charts will be generated from your spreadsheet.</div>
+          <div class="description">Chart recipes determine what charts will be available in the next step. These are generated from your data.</div>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-4">
           <div class="btn-actions">
             <button routerLink="/import" class="btn btn-empty-black">Previous</button>
             <button (click)="navigateToShare()" class="btn btn-primary next-step">Next Step</button>
@@ -24,7 +24,7 @@
         </label>
         <label for="recipe-opt-custom">
           <input type="radio" name="data-source" value="url" id="recipe-opt-custom" (change)="changeRecipe($event);" [checked]="!getWizardConfig().step2Sample"> Custom Recipes <br>
-          (Bring your own json file to create custom charts. Read <a>documentation</a> to learn more)
+          (Bring your own json file to create custom charts. Read <a target="_blank" href="https://github.com/OCHA-DAP/hxl-recipes">documentation</a> to learn more)
           <ul>
             <li>
               <a href="javascript:void(0)" hdxDropboxchooser (urlSelect)="updateSelectedRecipeUrl($event)">

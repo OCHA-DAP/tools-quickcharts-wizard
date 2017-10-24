@@ -10,6 +10,10 @@
           <div class="btn-actions">
             <button routerLink="/select" class="btn btn-empty-black">Previous</button>
             <div class="btn-group" dropdown>
+              <button (click)="prepareShare($event);" type="button" class="btn btn-primary next-step dropdown-toggle">
+                Share
+              </button>
+              <!--
               <button dropdownToggle type="button" class="btn btn-primary next-step dropdown-toggle">
                 Share <span class="caret"></span>
               </button>
@@ -17,6 +21,7 @@
                 <li role="menuitem"><a class="dropdown-item" href disabled="disabled">Download as image</a></li>
                 <li role="menuitem"><a class="dropdown-item" (click)="embedCode.scrollIntoView();">Embed</a></li>
               </ul>
+              -->
             </div>
           </div>
 
