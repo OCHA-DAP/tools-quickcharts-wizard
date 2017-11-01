@@ -71,12 +71,12 @@ export class GooglepickerDirective {
         } else {
           url = `https://drive.google.com/uc?export=download&id=${doc[google.picker.Document.ID]}`;
         }
+        const message = 'You picked: ' + url;
+        // console.log(message);
+        this.urlSelect.emit(url);
+        this.cd.detectChanges();
+        picker.setVisible(false);
       }
-      const message = 'You picked: ' + url;
-      console.log(message);
-      this.urlSelect.emit(url);
-      this.cd.detectChanges();
-      picker.setVisible(false);
     }.bind(this);
 
     gapi.load('auth', {'callback': onAuthApiLoad});
