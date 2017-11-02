@@ -20,7 +20,7 @@ export class AnalyticsService {
   }
 
   public trackStepLoad(stepName: string, firstStep: boolean, lastStep: boolean,
-            dataSourceUrl?: string, recipeUrl?: string) {
+            dataSourceUrl?: string, recipeUrl?: string, error?: string, additionalMpData?: {[s: string]: string|boolean|number}) {
 
     const mpData = {
       'workflow': 'quickcharts',
@@ -28,15 +28,30 @@ export class AnalyticsService {
       'first step': firstStep,
       'last step': lastStep,
     };
+    if (additionalMpData) {
+      Object.assign(mpData, additionalMpData);
+    }
     if (dataSourceUrl) {
       mpData['data source url'] = dataSourceUrl;
     }
     if (recipeUrl) {
       mpData['recipe url'] = recipeUrl;
     }
+    if (error) {
+      mpData['error'] = error;
+    }
 
     this.genericAnalyticsService.trackEventCategory('load step', {action: stepName}, mpData);
 
+  }
+
+  public trackRecipeChanged(dataSourceUrl: string, recipeUrl: string, bitesNum: number) {
+    const mpData = {
+      'data source url': dataSourceUrl,
+      'recipe url': recipeUrl,
+      'number of bites': bitesNum,
+    };
+    this.genericAnalyticsService.trackEventCategory('recipe change', {action: recipeUrl, value: bitesNum}, mpData);
   }
 
 }
