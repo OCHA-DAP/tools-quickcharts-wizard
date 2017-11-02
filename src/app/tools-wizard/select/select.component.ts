@@ -53,7 +53,7 @@ export class SelectComponent implements OnInit {
   changeRecipe($event) {
     this.getWizardConfig().step2Sample = $event.target.value === 'sample';
     if (this.getWizardConfig().step2Sample) {
-      this.updateSelectedRecipeUrl(new WizardConfigData().recipeUrl);
+      this.updateSelectedRecipeUrl(new WizardConfigData().recipeUrl, this.getWizardConfig().step2Sample);
     }
   }
   recipeUrlChanged($event) {
