@@ -76,18 +76,23 @@ export class SelectComponent implements OnInit {
       });
 
     bitesObs.subscribe( (bite: Bite) => {
-      switch (bite.type) {
-        case KeyFigureBite.type():
-          this.timeseriesBites.push(bite);
-          break;
-        case ChartBite.type():
-          this.chartBites.push(bite);
-          break;
-        case TimeseriesChartBite.type():
-          this.keyfigureBites.push(bite);
-          break;
+        switch (bite.type) {
+          case KeyFigureBite.type():
+            this.timeseriesBites.push(bite);
+            break;
+          case ChartBite.type():
+            this.chartBites.push(bite);
+            break;
+          case TimeseriesChartBite.type():
+            this.keyfigureBites.push(bite);
+            break;
+        }
+      },
+      null,
+      () => {
+        this.analyticsService.trackRecipeChanged(this.getWizardConfig().url, this.getWizardConfig().recipeUrl, this.totalBites());
       }
-    });
+    );
   }
 
   private resetData() {
