@@ -102,6 +102,8 @@ export class ImportComponent implements OnInit {
       const url = params.get('url');
       if (url) {
         this.wizardConfigService.getWizardConfigData().url = url;
+        this._selectedUrl = url;
+        this.getWizardConfig().step1Sample = false;
       }
       const recipeUrl = params.get('recipeUrl');
       if (recipeUrl) {
