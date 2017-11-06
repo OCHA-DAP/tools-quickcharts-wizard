@@ -102,6 +102,8 @@ export class ImportComponent implements OnInit {
       const url = params.get('url');
       if (url) {
         this.wizardConfigService.getWizardConfigData().url = url;
+        this._selectedUrl = url;
+        this.getWizardConfig().step1Sample = false;
       }
       const recipeUrl = params.get('recipeUrl');
       if (recipeUrl) {
@@ -109,7 +111,8 @@ export class ImportComponent implements OnInit {
       }
     });
 
-    this.analyticsService.trackStepLoad(this.stepName, true, false, this.getWizardConfig().url, this.getWizardConfig().recipeUrl);
+    this.analyticsService.trackStepLoad(this.stepName, true, false, this.getWizardConfig().url, this.getWizardConfig().recipeUrl,
+                      this.getWizardConfig().hxlCheckError);
   }
 
   getWizardConfig() {

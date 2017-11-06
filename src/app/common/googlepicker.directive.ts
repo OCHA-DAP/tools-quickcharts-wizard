@@ -9,10 +9,10 @@ declare const google: any;
 export class GooglepickerDirective {
 
   // The Browser API key obtained from the Google API Console.
-  readonly developerKey = 'AIzaSyDOGprh9-MkMZ7zCWIhrqbVwkyNCEFofmo';
+  readonly developerKey = 'AIzaSyDI2YqaXNwndxy6UEisT-5fUeJ2FMtz0VY';
 
   // The Client ID obtained from the Google API Console.
-  readonly clientId = '378410536565-kn14q1b73co95gfcuqpd2qmrtqpca13c.apps.googleusercontent.com';
+  readonly clientId = '378410536565-mvin02sm8rbr0f8rq9q9injarh93ego4.apps.googleusercontent.com';
 
   readonly scope = ['https://www.googleapis.com/auth/drive.readonly'];
 
@@ -71,12 +71,12 @@ export class GooglepickerDirective {
         } else {
           url = `https://drive.google.com/uc?export=download&id=${doc[google.picker.Document.ID]}`;
         }
+        const message = 'You picked: ' + url;
+        // console.log(message);
+        this.urlSelect.emit(url);
+        this.cd.detectChanges();
+        picker.setVisible(false);
       }
-      const message = 'You picked: ' + url;
-      console.log(message);
-      this.urlSelect.emit(url);
-      this.cd.detectChanges();
-      picker.setVisible(false);
     }.bind(this);
 
     gapi.load('auth', {'callback': onAuthApiLoad});
