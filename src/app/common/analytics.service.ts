@@ -51,7 +51,7 @@ export class AnalyticsService {
       'recipe url': recipeUrl,
       'number of bites': bitesNum,
     };
-    this.genericAnalyticsService.trackEventCategory('recipe change', {action: recipeUrl, value: bitesNum}, mpData);
+    this.genericAnalyticsService.trackEventCategory('recipe apply', {action: recipeUrl, value: bitesNum}, mpData);
   }
 
 }
