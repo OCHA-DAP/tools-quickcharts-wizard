@@ -120,7 +120,7 @@ export class ImportComponent implements OnInit {
     });
 
     this.analyticsService.trackStepLoad(this.stepName, true, false, this.getWizardConfig().url, this.getWizardConfig().recipeUrl,
-                      this.getWizardConfig().hxlCheckError);
+                      this.getWizardConfig().hxlCheckError ? this.getWizardConfig().hxlCheckError.errorSummary : null);
   }
 
   getWizardConfig() {
