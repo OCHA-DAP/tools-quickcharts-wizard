@@ -49,7 +49,7 @@ export class ShareComponent implements OnInit {
         // const parentOrigin = window.parent.location.href;
         console.log(`EMBED URL: ${url}`);
         const initMode = this.embedUrl == null;
-        this.embedUrl = url;
+        this.embedUrl = `<iframe src="${url}" style="border:none; width:100%; min-height:500px">`;
         if (!initMode) {
           this.embedCode.nativeElement.focus();
           this.embedCode.nativeElement.setSelectionRange(0, 0);
