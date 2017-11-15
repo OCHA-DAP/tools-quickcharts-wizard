@@ -20,7 +20,7 @@
       <div class="radio-selection">
         <div class="radio-title">Recipe options:</div>
         <label for="recipe-opt-hdx">
-          <input type="radio" name="data-source" value="sample" id="recipe-opt-hdx" (change)="changeRecipe($event);" [checked]="getWizardConfig().step2Sample">HDX Quick Charts Recipes <br>(See <a href="https://github.com/OCHA-DAP/hxl-recipes">a list of 100+ recipes</a>)
+          <input type="radio" name="data-source" value="sample" id="recipe-opt-hdx" (change)="changeRecipe($event);" [checked]="getWizardConfig().step2Sample">HDX Quick Charts Recipes <br>(See <a href="https://github.com/OCHA-DAP/hxl-recipes" target="_blank" >a list of 100+ recipes</a>)
         </label>
         <label for="recipe-opt-custom">
           <input type="radio" name="data-source" value="url" id="recipe-opt-custom" (change)="changeRecipe($event);" [checked]="!getWizardConfig().step2Sample"> Custom Recipes <br>
