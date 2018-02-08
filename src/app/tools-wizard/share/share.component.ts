@@ -7,6 +7,7 @@ import { HttpService } from '../../shared/http.service';
 import { environment } from '../../../environments/environment';
 import { WizardConfigService } from './../../wizard-config.service';
 import { AnalyticsService } from './../../common/analytics.service';
+import { setTime } from 'ngx-bootstrap/timepicker/timepicker.utils';
 
 @Component({
   selector: 'app-share',
@@ -20,6 +21,8 @@ export class ShareComponent implements OnInit {
   httpService: HttpService;
   embedUrl: string = null;
   iFrameUrl: SafeResourceUrl = null;
+  pngDownloadFlag: Boolean = false;
+  pngDownloadUrl: SafeResourceUrl = null;
   dataSource: string = null;
 
   @ViewChild('embedCode')
@@ -50,6 +53,18 @@ export class ShareComponent implements OnInit {
         console.log(`EMBED URL: ${url}`);
         const initMode = this.embedUrl == null;
         this.embedUrl = `<iframe src="${url}" style="border:none; width:100%; min-height:500px">`;
+
+        const snapService = environment.snapService;
+        const urlEncoded = encodeURIComponent(url);
+        const pngDownloadUrl = `${snapService}/png?viewport={"width": 1280, "height": 1}&url=${urlEncoded}`;
+        this.pngDownloadUrl = this.sanitizer.bypassSecurityTrustResourceUrl(pngDownloadUrl);
+        if (this.pngDownloadFlag) {
+          this.pngDownloadFlag = false;
+          setTimeout(() => {
+            window.open(pngDownloadUrl, '_blank');
+          }, 2);
+        }
+
         if (!initMode) {
           this.embedCode.nativeElement.focus();
           this.embedCode.nativeElement.setSelectionRange(0, 0);
@@ -70,6 +85,11 @@ export class ShareComponent implements OnInit {
       iFrameOrigin = origin + iFrameOrigin;
     }
     iFrame.contentWindow.window.postMessage(`getEmbedUrl: ${origin}`, iFrameOrigin);
+  }
+
+  prepareSnapshot($event) {
+    this.pngDownloadFlag = true;
+    this.getEmbedUrl();
   }
 
   prepareShare($event, scrollto = false) {
