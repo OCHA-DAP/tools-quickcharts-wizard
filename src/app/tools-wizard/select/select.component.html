@@ -9,7 +9,7 @@
         <div class="col-xs-4">
           <div class="btn-actions">
             <button routerLink="/import" class="btn btn-empty-black">Previous</button>
-            <button (click)="navigateToShare()" class="btn btn-primary next-step">Next Step</button>
+            <button (click)="navigateToShare()" [disabled]="totalBites() === 0" class="btn btn-primary next-step">Next Step</button>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
           </div>
       </div>
       <div class="row">
-        <div class="results-title"> {{totalBites()}} charts are available based on the recipes</div>
+        <div class="results-title"> {{totalBites()}} charts are available based on the recipes<span class="results-title" *ngIf="totalBites() === 0">. Please choose another recipe or dataset.</span></div>
 
         <div class="result-group" *ngIf="chartBites.length > 0">
           <div class="section-title">Bar chart</div>
