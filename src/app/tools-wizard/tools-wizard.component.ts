@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HxlproxyService } from 'hdxtools-ng-lib';
+import { HxlproxyService } from 'hxl-preview-ng-lib';
 import { environment } from './../../environments/environment';
 import { Http } from '@angular/http';
 import { HttpService } from '../shared/http.service';

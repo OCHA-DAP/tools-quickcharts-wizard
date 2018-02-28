@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { SimpleModule} from 'hdxtools-ng-lib';
+import { SimpleModule} from 'hxl-preview-ng-lib';
 import { AppComponent } from './app.component';
 import { ToolsWizardComponent } from './tools-wizard/tools-wizard.component';
 import { AppRoutingModule } from './app-routing.module';
