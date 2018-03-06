@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
-import { CookBookService, Bite, KeyFigureBite, ChartBite, TimeseriesChartBite } from 'hdxtools-ng-lib';
+import { CookBookService, Bite, KeyFigureBite, ChartBite, TimeseriesChartBite } from 'hxl-preview-ng-lib';
 import { WizardConfigService } from './../../wizard-config.service';
 import { GooglepickerDirective } from './../../common/googlepicker.directive';
 import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AnalyticsService as GenericAnalyticsService, GA_PAGEVIEW } from 'hdxtools-ng-lib';
+import { AnalyticsService as GenericAnalyticsService, GA_PAGEVIEW } from 'hxl-preview-ng-lib';
 import { environment } from './../../environments/environment';
 
 declare const window: any;
