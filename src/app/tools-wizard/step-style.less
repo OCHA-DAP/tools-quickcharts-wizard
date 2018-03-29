@@ -17,17 +17,23 @@
     //position: absolute;
     //width: 100%;
 
-    .title {
-      margin-top: @stepHeaderMarginTop;
-      margin-bottom: 5px;
-      .sourceSansProFont(600, @stepHeaderTitleFontSize);
-      line-height: @stepHeaderLineHeight;
-    }
+
     .description {
       .sourceSansProFont(400, @stepHeaderDescriptionFontSize);
       margin-bottom: @stepHeaderMarginBottom;
       line-height: @stepHeaderLineHeight;
     }
+  }
+
+  .title {
+    margin-top: @stepHeaderMarginTop;
+    margin-bottom: 5px;
+    .sourceSansProFont(600, @stepHeaderTitleFontSize);
+    line-height: @stepHeaderLineHeight;
+  }
+
+  .customize-section {
+    background-color: @extraLightGrayColor;
   }
 
   .btn {
@@ -58,8 +64,8 @@
   .step-content {
     //padding-top: (@stepHeaderMarginBottom + @stepHeaderMarginTop + @stepHeaderLineHeight*@stepHeaderTitleFontSize +
     //              @stepHeaderLineHeight*@stepHeaderDescriptionFontSize) + 45px;
-    padding-top: 45px;
-    padding-bottom: 45px;
+    margin-top: 45px;
+    margin-bottom: 45px;
 
     background-color: @extraLightGrayColor;
     .sourceSansProFont(400, 16px);

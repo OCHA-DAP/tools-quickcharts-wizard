@@ -1,16 +1,12 @@
 <div id="step1" class="step">
-  <div class="paddingRowHack step-header">
-    <div class="paddingLeftHack paddingRightHack">
+  <div class="paddingDoubleRowHack step-header">
+    <div class="paddingDoubleLRHack">
       <div class="row" style="position: relative;">
         <div class="col-xs-9">
           <div class="title">{{stepName}}</div>
           <div class="description">Import a spreadsheet or CSV file from a URL or from the cloud. Supported formats: <strong>CSV, XLS and XLSX.</strong></div>
         </div>
         <span class="btn-actions">
-          <button (click)="navigateToSelect()"
-                  class="btn btn-primary next-step">
-            Next Step
-          </button>
         </span>
       </div>
     </div>
@@ -39,9 +35,10 @@
     </div>
     <div *ngIf="getWizardConfig().step1Sample" class="col-xs-9 source-sample-data">
       <div *ngIf="getWizardConfig().hxlCheckError" class="alert alert-danger" role="alert" [innerHTML]="getWizardConfig().hxlCheckError.fullErrorMessage"></div>
-      <label *ngFor="let s of sampleData" class="sample-item active">
-        <input name="sample-data-selection" value="{{ s.url }}" type="radio" [checked]=" (s.url === selectedUrl) ? true : null" (change)="changeSampleUrl(s.url);">
-        <span class="sample-content">
+      <div *ngFor="let s of sampleData" >
+        <label class="sample-item active">
+          <input name="sample-data-selection" value="{{ s.url }}" type="radio" [checked]=" (s.url === selectedUrl) ? true : null" (change)="changeSampleUrl(s.url);">
+          <span class="sample-content">
           <span class="sample-title">
             {{ s.name }}
           </span>
@@ -52,12 +49,72 @@
             {{ s.url }}
           </span>
         </span>
-      </label>
+        </label>
+      </div>
     </div>
     <div *ngIf="!getWizardConfig().step1Sample" class="col-xs-9 source-custom-url">
       <div *ngIf="getWizardConfig().hxlCheckError" class="alert alert-danger" role="alert" [innerHTML]="getWizardConfig().hxlCheckError.fullErrorMessage"></div>
       <label for="source-custom-url-field">Enter URL</label>
       <input [(ngModel)]="selectedUrl" name="selectedUrl" class="wizard-input" id="source-custom-url-field" placeholder="eg. http://example.com/population-jan-2011.json">
+    </div>
+  </div>
+  <div class="paddingDoubleRowHack customize-section">
+    <div class="paddingDoubleLRHack">
+      <div class="row step-content">
+        <div class="col-xs-12">
+          <div class="title">Customize your Quick Charts:</div>
+        </div>
+        <div class="col-xs-12">
+          <div class="quick-charts-render">
+            <iframe #quickChartsIFrame id="quick-charts-iframe" [src]="iFrameUrl" (load)="iFrameLoaded()"
+                    style="border:none; width:100%; min-height:520px">
+            </iframe>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="data-source">
+            Data source: <a target="_blank" [href]="selectedUrl">{{ selectedUrl }}</a>
+          </div>
+        </div>
+        <div class="col-xs-12 share-section">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="title">Share Quick Charts:</div>
+            </div>
+            <div class="col-xs-3">
+              <div class="section-title">Download:</div>
+              <ul>
+                <!--<li><a>Download as SVG</a></li>-->
+                <li><a (click)="prepareSnapshot($event)">Download as image</a></li>
+              </ul>
+              <div class="section-title">Push to HDX:</div>
+              <ul>
+                <li><a class="disabled">Publish data and charts to HDX (coming soon)</a></li>
+              </ul>
+            </div>
+            <div class="col-xs-9">
+              <div>
+                <ul class="vertical-menu section-title">
+                  <li (click)="changeMenuEmbed()">
+                    <a *ngIf="!menuEmbed">Embed (Live charts)</a>
+                    <span *ngIf="menuEmbed">Embed (Live charts)</span>
+                  </li>
+                  <li (click)="changeMenuEmbed()">
+                    <a *ngIf="menuEmbed">Share URL</a>
+                    <span *ngIf="!menuEmbed">Share URL</span>
+                  </li>
+                </ul>
+                <span class="section-title" style="margin-left: 10px">:</span>
+              </div>
+              <div>
+                <textarea id="embedCode" #embedCode class="wizard-input" (click)="prepareShare($event)" readonly [innerText]="menuEmbed ? embedUrl : shareUrl"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 </div>
