@@ -1,34 +1,10 @@
 <div class="wizard-container">
-  <div class="paddingRowHack wizard-header">
-    <div class="paddingLeftHack paddingRightHack">
-      <div class="row">
-        <div class="col-xs-4">
-          <h1>Quick Charts</h1>
-        </div>
-        <div class="col-xs-8">
-          <div class="steps-container">
-            <ol class="steps">
-              <a routerLink="/import"
-                 routerLinkActive="active"
-                 #importLink="routerLinkActive"
-                 [ngClass]="{'done': selectActive.isActive || shareActive.isActive }">
-                <li >Import Data</li>
-              </a>
-              <a routerLink="/select"
-                 routerLinkActive="active"
-                 #selectActive="routerLinkActive"
-                 [class.disabled]="importLink.isActive ? true : null"
-                 [ngClass]="{'done': shareActive.isActive }">
-                <li>Select Recipes</li>
-              </a>
-              <a routerLink="/share"
-                 routerLinkActive="active"
-                 #shareActive="routerLinkActive"
-                 [class.disabled]="importLink.isActive || selectActive.isActive ? true : null"
-              >
-                <li>Share Quick Charts</li>
-              </a>
-            </ol>
+  <div class="paddingDoubleRowHack wizard-header-container">
+    <div class="paddingRowHack wizard-header">
+      <div class="paddingLeftHack paddingRightHack">
+        <div class="row">
+          <div class="col-xs-12">
+            <h1>Quick Charts</h1>
           </div>
         </div>
       </div>
@@ -41,8 +17,7 @@
     <div id="loading-container" *ngIf="loadingStatus">
       <div class="loading-content">
         <div><img src="./assets/loading-dots.gif"></div>
-        <div *ngIf="selectActive.isActive">Checking your data...</div>
-        <div *ngIf="shareActive.isActive">Generating Quick Charts...</div>
+        <div>Loading...</div>
       </div>
 
     </div>
