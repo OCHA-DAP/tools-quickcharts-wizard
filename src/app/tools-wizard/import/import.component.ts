@@ -1,9 +1,14 @@
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { GooglepickerDirective } from './../../common/googlepicker.directive';
 import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { WizardConfigService } from './../../wizard-config.service';
 import { AnalyticsService } from './../../common/analytics.service';
+import { HttpService } from '../../shared/http.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Http } from '@angular/http';
+import { environment } from '../../../environments/environment';
+
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
@@ -11,7 +16,7 @@ import { AnalyticsService } from './../../common/analytics.service';
 })
 export class ImportComponent implements OnInit {
 
-  readonly stepName = '1. Import Data';
+  readonly stepName = 'Import Data';
 
   _selectedUrl = '';
   sampleData = [
@@ -91,9 +96,25 @@ export class ImportComponent implements OnInit {
     }
   ];
 
+  httpService: HttpService;
+  shareUrl: string = null;
+  embedUrl: string = null;
+  iFrameUrl: SafeResourceUrl = null;
+  pngDownloadFlag: Boolean = false;
+  pngDownloadUrl: SafeResourceUrl = null;
+  menuEmbed = true;
+
+  @ViewChild('quickChartsIFrame')
+  private quickChartsIFrame: ElementRef;
+
+  @ViewChild('embedCode')
+  private embedCode: ElementRef;
 
   constructor(private router: Router, private route: ActivatedRoute,
-                private wizardConfigService: WizardConfigService, private analyticsService: AnalyticsService) { }
+                private wizardConfigService: WizardConfigService, private analyticsService: AnalyticsService,
+                http: Http, private sanitizer: DomSanitizer) {
+    this.httpService = <HttpService> http;
+  }
 
   get selectedUrl() {
     return this._selectedUrl;
@@ -102,25 +123,42 @@ export class ImportComponent implements OnInit {
   set selectedUrl(selectedUrl: string) {
     this.getWizardConfig().hxlCheckError = null;
     this._selectedUrl = selectedUrl;
+    const sivOpt: ScrollIntoViewOptions = {
+      behavior: 'smooth'
+    };
+    this.quickChartsIFrame.nativeElement.scrollIntoView(sivOpt);
+    this.embedUrl = null;
+    this.updateIframeUrl();
   }
 
   ngOnInit() {
     this._selectedUrl = this.getWizardConfig().url ? this.getWizardConfig().url : this.sampleData[0].url;
     this.route.paramMap.subscribe((params: ParamMap) => {
-      const url = params.get('url');
-      if (url) {
-        this.wizardConfigService.getWizardConfigData().url = url;
-        this._selectedUrl = url;
+      this.httpService.turnOnModal();
+      const urlParam = params.get('url');
+      if (urlParam) {
+        this.wizardConfigService.getWizardConfigData().url = urlParam;
+        this._selectedUrl = urlParam;
         this.getWizardConfig().step1Sample = false;
       }
-      const recipeUrl = params.get('recipeUrl');
-      if (recipeUrl) {
-        this.wizardConfigService.getWizardConfigData().recipeUrl = recipeUrl;
+      const recipeUrlParam = params.get('recipeUrl');
+      if (recipeUrlParam) {
+        this.wizardConfigService.getWizardConfigData().recipeUrl = recipeUrlParam;
       }
+
+      this.updateIframeUrl();
     });
 
     this.analyticsService.trackStepLoad(this.stepName, true, false, this.getWizardConfig().url, this.getWizardConfig().recipeUrl,
                       this.getWizardConfig().hxlCheckError ? this.getWizardConfig().hxlCheckError.errorSummary : null);
+  }
+
+  private updateIframeUrl() {
+    const recipeUrl = encodeURIComponent(this.wizardConfigService.getWizardConfigData().recipeUrl);
+    const url = encodeURIComponent(this._selectedUrl);
+    const hxlPreviewUrl = environment.hxlPreview;
+    const newUrl = `${hxlPreviewUrl}/show;url=${url};recipeUrl=${recipeUrl};toolsMode=true`;
+    this.iFrameUrl = this.sanitizer.bypassSecurityTrustResourceUrl(newUrl);
   }
 
   getWizardConfig() {
@@ -140,8 +178,80 @@ export class ImportComponent implements OnInit {
     this.selectedUrl = url;
   }
 
-  navigateToSelect() {
-    this.router.navigate(['/select', {'url': this.selectedUrl}]);
+  iFrameLoaded() {
+    if (this.iFrameUrl) {
+      console.log('iFrame loaded!');
+      this.getEmbedUrl();
+      this.httpService.turnOffModal();
+    }
   }
 
+  @HostListener('window:message', ['$event'])
+  onEmbedUrl($event) {
+    const action = $event.data;
+
+    const EMBED_URL = 'embedUrl:';
+    if (action && action.startsWith && action.startsWith(EMBED_URL)) {
+      if (window.parent) {
+        const url: string = action.slice(EMBED_URL.length);
+        // const parentOrigin = window.parent.location.href;
+        console.log(`EMBED URL: ${url}`);
+        const initMode = this.embedUrl == null;
+        this.shareUrl = url;
+        this.embedUrl = `<iframe src="${url}" style="border:none; width:100%; min-height:500px">`;
+
+        const snapService = environment.snapService;
+        const urlEncoded = encodeURIComponent(url);
+        const pngDownloadUrl = `${snapService}/png?viewport={"width": 1280, "height": 1}&url=${urlEncoded}`;
+        this.pngDownloadUrl = this.sanitizer.bypassSecurityTrustResourceUrl(pngDownloadUrl);
+        if (this.pngDownloadFlag) {
+          this.pngDownloadFlag = false;
+          setTimeout(() => {
+            window.open(pngDownloadUrl, '_blank');
+          }, 2);
+        }
+
+        if (!initMode) {
+          this.embedCode.nativeElement.focus();
+          this.embedCode.nativeElement.setSelectionRange(0, 0);
+          setTimeout(() => {
+            this.embedCode.nativeElement.setSelectionRange(0, this.embedCode.nativeElement.value.length);
+          }, 2);
+        }
+        return;
+      }
+    }
+  }
+
+  getEmbedUrl() {
+    const origin = window.location.origin;
+    const iFrame: HTMLIFrameElement = <HTMLIFrameElement> document.getElementById('quick-charts-iframe');
+    let iFrameOrigin = environment.hxlPreview;
+    if (!iFrameOrigin.startsWith('http')) {
+      iFrameOrigin = origin + iFrameOrigin;
+    }
+    iFrame.contentWindow.window.postMessage(`getEmbedUrl: ${origin}`, iFrameOrigin);
+  }
+
+  prepareSnapshot($event) {
+    this.pngDownloadFlag = true;
+    this.getEmbedUrl();
+  }
+
+  prepareShare($event, scrollto = false) {
+    const element = $event.target;
+    this.shareUrl = '';
+    this.embedUrl = '';
+    // element.setSelectionRange(0, 0);
+    // element.setSelectionRange(0, element.value.length);
+    element.scrollIntoView({behavior: 'smooth', block: 'end'});
+    setTimeout(() => {
+      this.getEmbedUrl();
+    }, 2);
+
+  }
+
+  changeMenuEmbed() {
+    this.menuEmbed = !this.menuEmbed;
+  }
 }
