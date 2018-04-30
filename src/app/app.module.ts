@@ -8,8 +8,6 @@ import { AppComponent } from './app.component';
 import { ToolsWizardComponent } from './tools-wizard/tools-wizard.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ImportComponent } from './tools-wizard/import/import.component';
-import { SelectComponent } from './tools-wizard/select/select.component';
-import { ShareComponent } from './tools-wizard/share/share.component';
 import { HttpService } from './shared/http.service';
 import { Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { CommonModule } from './common/common.module';
@@ -29,9 +27,7 @@ export function httpFactory(backend: XHRBackend, options: RequestOptions) {
   declarations: [
     AppComponent,
     ToolsWizardComponent,
-    ImportComponent,
-    SelectComponent,
-    ShareComponent
+    ImportComponent
   ],
   imports: [
     BsDropdownModule.forRoot(),
