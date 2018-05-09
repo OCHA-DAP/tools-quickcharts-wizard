@@ -154,10 +154,13 @@ export class ImportComponent implements OnInit {
   }
 
   private updateIframeUrl() {
-    const recipeUrl = encodeURIComponent(this.wizardConfigService.getWizardConfigData().recipeUrl);
     const url = encodeURIComponent(this._selectedUrl);
     const hxlPreviewUrl = environment.hxlPreview;
-    const newUrl = `${hxlPreviewUrl}/show;url=${url};recipeUrl=${recipeUrl};toolsMode=true`;
+    let newUrl = `${hxlPreviewUrl}/show;url=${url};toolsMode=true`;
+    if (this.wizardConfigService.getWizardConfigData().recipeUrl) {
+      const recipeUrl = encodeURIComponent(this.wizardConfigService.getWizardConfigData().recipeUrl);
+      newUrl += `;recipeUrl=${recipeUrl}`;
+    }
     this.iFrameUrl = this.sanitizer.bypassSecurityTrustResourceUrl(newUrl);
   }
 
