@@ -191,6 +191,7 @@ export class ImportComponent implements OnInit {
     const action = $event.data;
 
     const EMBED_URL = 'embedUrl:';
+    const IFRAME_HEIGHT_UPDATE = 'iframeHeightUpdate:';
     if (action && action.startsWith && action.startsWith(EMBED_URL)) {
       if (window.parent) {
         const url: string = action.slice(EMBED_URL.length);
@@ -220,6 +221,10 @@ export class ImportComponent implements OnInit {
         }
         return;
       }
+    }
+    if (action && action.startsWith && action.startsWith(IFRAME_HEIGHT_UPDATE)) {
+      const height: string = action.slice(IFRAME_HEIGHT_UPDATE.length);
+      this.quickChartsIFrame.nativeElement.style.minHeight = height + 'px';
     }
   }
 
