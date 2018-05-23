@@ -227,7 +227,7 @@ export class ImportComponent implements OnInit {
   iFrameLoaded() {
     if (this.iFrameUrl) {
       console.log('iFrame loaded!');
-      this.getEmbedUrl();
+      this.getEmbedUrl(false);
       this.httpService.turnOffModal();
     }
   }
@@ -274,19 +274,28 @@ export class ImportComponent implements OnInit {
     }
   }
 
-  getEmbedUrl() {
+  /**
+   *
+   * @param forShare is the link requested by the user for sharing purposes
+   * @param forImage is the link needed for sharing as an image
+   */
+  getEmbedUrl(forShare: boolean, forImage?: boolean) {
     const origin = window.location.origin;
     const iFrame: HTMLIFrameElement = <HTMLIFrameElement> document.getElementById('quick-charts-iframe');
     let iFrameOrigin = environment.hxlPreview;
     if (!iFrameOrigin.startsWith('http')) {
       iFrameOrigin = origin + iFrameOrigin;
     }
-    iFrame.contentWindow.window.postMessage(`getEmbedUrl: ${origin}`, iFrameOrigin);
+    iFrame.contentWindow.window.postMessage({
+      getEmbedUrl: origin,
+      forShare: forShare,
+      forImage: forImage
+    }, iFrameOrigin);
   }
 
   prepareSnapshot($event) {
     this.pngDownloadFlag = true;
-    this.getEmbedUrl();
+    this.getEmbedUrl(true, true);
   }
 
   prepareShare($event, scrollto = false) {
@@ -297,7 +306,7 @@ export class ImportComponent implements OnInit {
     // element.setSelectionRange(0, element.value.length);
     element.scrollIntoView({behavior: 'smooth', block: 'end'});
     setTimeout(() => {
-      this.getEmbedUrl();
+      this.getEmbedUrl(true, false);
     }, 2);
 
   }

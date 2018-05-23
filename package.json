@@ -26,7 +26,7 @@
     "ngx-bootstrap": "^1.9.3",
     "rxjs": "5.1.0",
     "zone.js": "^0.8.14",
-    "hxl-preview-ng-lib": "https://github.com/OCHA-DAP/hxl-preview-ng-lib/raw/master/build/hxl-preview-ng-lib-0.2.4.tgz"
+    "hxl-preview-ng-lib": "https://github.com/OCHA-DAP/hxl-preview-ng-lib/raw/master/build/hxl-preview-ng-lib-0.7.3.tgz"
   },
   "devDependencies": {
     "@angular/cli": "1.4.1",
