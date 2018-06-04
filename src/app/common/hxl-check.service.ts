@@ -20,7 +20,8 @@ export class HxlCheckService {
   }
 
   public check(dataUrl): Observable<HxlCheckResponse> {
-    const fullUrl = `${this.hxlCheck}?url=${dataUrl}`;
+    const encodedDataUrl = encodeURIComponent(dataUrl);
+    const fullUrl = `${this.hxlCheck}?url=${encodedDataUrl}`;
     console.log('Full url is: ' + fullUrl);
 
     const obs = this.http.get(fullUrl)
