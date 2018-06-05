@@ -19,7 +19,7 @@ export class AnalyticsService {
     this.genericAnalyticsService.init(gaToken, mpToken);
   }
 
-  public trackStepLoad(stepName: string, firstStep: boolean, lastStep: boolean,
+  public trackStepLoad(stepName: string, firstStep: boolean, lastStep: boolean, sample: boolean,
             dataSourceUrl?: string, recipeUrl?: string, error?: string, additionalMpData?: {[s: string]: string|boolean|number}) {
 
     const mpData = {
@@ -27,6 +27,7 @@ export class AnalyticsService {
       'step name': stepName,
       'first step': firstStep,
       'last step': lastStep,
+      'sample': sample,
     };
     if (additionalMpData) {
       Object.assign(mpData, additionalMpData);
