@@ -43,15 +43,12 @@ export class GooglepickerDirective {
     const onPickerApiLoad = function () {
       this.pickerApiLoaded = true;
       createPicker();
-      console.log('GGGGGGGGGG DIRECTIVE BUILD');
     }.bind(this);
 
     const handleAuthResult = function (authResult) {
       if (authResult && !authResult.error) {
         this.oauthToken = authResult.access_token;
         createPicker();
-      } else {
-        console.log('Google auth error: ' + authResult.error);
       }
     }.bind(this);
 
@@ -68,7 +65,6 @@ export class GooglepickerDirective {
     }.bind(this);
 
     const pickerCallback = function (data) {
-      console.log('GGGGGGGGGG DIRECTIVE CLOSE' + data);
       let url = '';
       if (data[google.picker.Response.ACTION] === google.picker.Action.PICKED) {
         const doc = data[google.picker.Response.DOCUMENTS][0];
