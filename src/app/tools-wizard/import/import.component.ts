@@ -172,7 +172,11 @@ export class ImportComponent implements OnInit {
     this.quickChartsIFrame.nativeElement.scrollIntoView(sivOpt);
     this.embedUrl = null;
     this.updateIframeUrl();
+
+    this.trackStepLoad();
   }
+
+
 
   ngOnInit() {
     this._selectedUrl = this.getWizardConfig().url ? this.getWizardConfig().url : this.sampleData[0].url;
@@ -190,9 +194,14 @@ export class ImportComponent implements OnInit {
       }
 
       this.updateIframeUrl();
+      this.trackStepLoad();
     });
 
-    this.analyticsService.trackStepLoad(this.stepName, true, false, this.getWizardConfig().url, this.getWizardConfig().recipeUrl,
+  }
+
+  private trackStepLoad() {
+    this.analyticsService.trackStepLoad(this.stepName, true, true, this.getWizardConfig().step1Sample,
+                      this.getWizardConfig().url, this.getWizardConfig().recipeUrl,
                       this.getWizardConfig().hxlCheckError ? this.getWizardConfig().hxlCheckError.errorSummary : null);
   }
 
@@ -204,6 +213,7 @@ export class ImportComponent implements OnInit {
       const recipeUrl = encodeURIComponent(this.wizardConfigService.getWizardConfigData().recipeUrl);
       newUrl += `;recipeUrl=${recipeUrl}`;
     }
+    newUrl += `;sample=${this.getWizardConfig().step1Sample}`;
     this.iFrameUrl = this.sanitizer.bypassSecurityTrustResourceUrl(newUrl);
   }
 
