@@ -12,6 +12,7 @@ import { HttpService } from './shared/http.service';
 import { Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { CommonModule } from './common/common.module';
 import { WizardConfigService } from './wizard-config.service';
+import { ModalModule } from 'ngx-bootstrap';
 
 export const HTTP_SERVICE_PROVIDERS: any = {
   provide: Http,
@@ -31,6 +32,7 @@ export function httpFactory(backend: XHRBackend, options: RequestOptions) {
   ],
   imports: [
     BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
     HttpModule,
     AppRoutingModule,
     BrowserModule,
