@@ -1,13 +1,14 @@
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { GooglepickerDirective } from './../../common/googlepicker.directive';
 import { DropboxchooserDirective } from './../../common/dropboxchooser.directive';
-import { Component, OnInit, ChangeDetectorRef, ViewChild, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, HostListener, ElementRef, TemplateRef } from '@angular/core';
 import { WizardConfigService } from './../../wizard-config.service';
 import { AnalyticsService } from './../../common/analytics.service';
 import { HttpService } from '../../shared/http.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Http } from '@angular/http';
 import { environment } from '../../../environments/environment';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-import',
@@ -152,10 +153,11 @@ export class ImportComponent implements OnInit {
 
   @ViewChild('embedCode')
   private embedCode: ElementRef;
+  modalRef: BsModalRef;
 
   constructor(private router: Router, private route: ActivatedRoute,
                 private wizardConfigService: WizardConfigService, private analyticsService: AnalyticsService,
-                http: Http, private sanitizer: DomSanitizer) {
+                http: Http, private sanitizer: DomSanitizer, private modalService: BsModalService) {
     this.httpService = <HttpService> http;
   }
 
@@ -323,5 +325,13 @@ export class ImportComponent implements OnInit {
 
   changeMenuEmbed() {
     this.menuEmbed = !this.menuEmbed;
+  }
+
+  openModal(template: TemplateRef<any>) {
+    const config = {
+      animated: false
+    };
+
+    this.modalRef = this.modalService.show(template, config);
   }
 }
