@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BsDropdownModule } from 'ngx-bootstrap';
 import { SimpleModule} from 'hxl-preview-ng-lib';
 import { AppComponent } from './app.component';
 import { ToolsWizardComponent } from './tools-wizard/tools-wizard.component';
@@ -31,8 +31,8 @@ export function httpFactory(backend: XHRBackend, options: RequestOptions) {
     ImportComponent
   ],
   imports: [
-    BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    BsDropdownModule.forRoot(),
     HttpModule,
     AppRoutingModule,
     BrowserModule,
