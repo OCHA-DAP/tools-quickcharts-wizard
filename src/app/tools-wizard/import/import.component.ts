@@ -154,7 +154,7 @@ export class ImportComponent implements OnInit {
   @ViewChild('embedCode')
   private embedCode: ElementRef;
   modalRef: BsModalRef;
-  dataCheckIframeUrl: SafeResourceUrl = null;
+  quickChartsDemoUrl: SafeResourceUrl = null;
 
   constructor(private router: Router, private route: ActivatedRoute,
                 private wizardConfigService: WizardConfigService, private analyticsService: AnalyticsService,
@@ -333,7 +333,7 @@ export class ImportComponent implements OnInit {
       animated: false
     };
 
-    this.dataCheckIframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+    this.quickChartsDemoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       'https://docs.google.com/presentation/d/e/2PACX-1vR-gSY38muZE9SA27NjAcueKoobhKi_Dc3jN4BIDPTp7FJjOCiWIkhPU4Z' +
       'kPyHvfR0pBdNpfswmKZ4p/embed?start=false&loop=false&delayms=3000');
     this.modalRef = this.modalService.show(template, config);
