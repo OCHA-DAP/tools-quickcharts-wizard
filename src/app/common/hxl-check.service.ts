@@ -1,6 +1,7 @@
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {of as observableOf,  Observable } from 'rxjs';
+import {catchError} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 // declare const JSON: any;
 
@@ -13,7 +14,7 @@ export class HxlCheckService {
 
   private hxlCheck: string;
 
-  constructor(private http: Http) { }
+  constructor(private httpClient: HttpClient) { }
 
   public init(hxlCheck) {
     this.hxlCheck = hxlCheck;
@@ -24,13 +25,12 @@ export class HxlCheckService {
     const fullUrl = `${this.hxlCheck}?url=${encodedDataUrl}`;
     console.log('Full url is: ' + fullUrl);
 
-    const obs = this.http.get(fullUrl)
-      .map( (r: Response) => r.json() )
-      .catch( (err: any, caught: Observable<any>) => {
-        return Observable.of({
+    const obs = this.httpClient.get(fullUrl).pipe(
+      catchError( (err: any, caught: Observable<any>) => {
+        return observableOf({
           'status': false
         });
-      });
+      }));
 
     return obs;
   }

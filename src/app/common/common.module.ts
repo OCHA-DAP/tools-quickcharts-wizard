@@ -4,6 +4,8 @@ import { GooglepickerDirective } from './googlepicker.directive';
 import { DropboxchooserDirective } from './dropboxchooser.directive';
 import { HxlCheckService } from './hxl-check.service';
 import { AnalyticsService } from './analytics.service';
+import { HttpInterceptor } from '@angular/common/http';
+import { HttpService } from '../shared/http.service';
 
 @NgModule({
   imports: [
