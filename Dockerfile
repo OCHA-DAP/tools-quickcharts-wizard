@@ -4,9 +4,10 @@ WORKDIR /src
 
 COPY . .
 
-RUN npm install -g @angular/cli && \
+RUN npm install npm@latest -g && \
+    npm install -g @angular/cli && \
     npm install && \
-    ng build --prod --base-href /wizard/datacheck/
+    ng build --prod --base-href /wizard/quickcharts/
 
 FROM unocha/nginx:1.14
 
