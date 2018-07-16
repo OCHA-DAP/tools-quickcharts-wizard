@@ -6,7 +6,7 @@ COPY . .
 
 RUN npm install -g @angular/cli && \
     npm install && \
-    ng build --prod -bh /wizard/quickcharts/
+    ng build --prod --base-href /wizard/datacheck/
 
 FROM unocha/nginx:1.14
 
