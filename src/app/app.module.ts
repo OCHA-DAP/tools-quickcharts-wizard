@@ -9,20 +9,16 @@ import { ToolsWizardComponent } from './tools-wizard/tools-wizard.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ImportComponent } from './tools-wizard/import/import.component';
 import { HttpService } from './shared/http.service';
-import { Http, HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { CommonModule } from './common/common.module';
 import { WizardConfigService } from './wizard-config.service';
 import { ModalModule } from 'ngx-bootstrap';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 export const HTTP_SERVICE_PROVIDERS: any = {
-  provide: Http,
-  useFactory: httpFactory,
-  deps: [XHRBackend, RequestOptions]
+  provide: HTTP_INTERCEPTORS,
+  useClass: HttpService,
+  multi: true
 };
-
-export function httpFactory(backend: XHRBackend, options: RequestOptions) {
-  return new HttpService(backend, options);
-}
 
 @NgModule({
   declarations: [
@@ -33,7 +29,7 @@ export function httpFactory(backend: XHRBackend, options: RequestOptions) {
   imports: [
     ModalModule.forRoot(),
     BsDropdownModule.forRoot(),
-    HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserModule,
     FormsModule,
@@ -42,7 +38,8 @@ export function httpFactory(backend: XHRBackend, options: RequestOptions) {
   ],
   providers: [
     HTTP_SERVICE_PROVIDERS,
-    WizardConfigService
+    WizardConfigService,
+    HttpService
   ],
   bootstrap: [AppComponent]
 })
