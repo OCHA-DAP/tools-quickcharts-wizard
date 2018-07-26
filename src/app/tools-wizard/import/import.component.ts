@@ -146,8 +146,13 @@ export class ImportComponent implements OnInit {
 
   updateSelectedUrl(newUrl: string) {
     console.log('Updating with ' + newUrl);
-    this.selectedUrl = newUrl;
+
+    /**
+     * 'selectedUrl' is a setter that triggers tracking/analytics events.
+     * So we need to set the 'step1Sample' flag to false before setting 'selectedUrl'
+     */
     this.getWizardConfig().step1Sample = false;
+    this.selectedUrl = newUrl;
   }
   changeDatasource($event) {
     this.getWizardConfig().step1Sample = $event.target.value === 'sample';
