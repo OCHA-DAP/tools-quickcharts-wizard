@@ -1,9 +1,10 @@
+import { timer as observableTimer } from 'rxjs';
+
+import { debounce, distinctUntilChanged } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { HxlproxyService } from 'hxl-preview-ng-lib';
 import { environment } from './../../environments/environment';
-import { Http } from '@angular/http';
 import { HttpService } from '../shared/http.service';
-import { Observable } from 'rxjs/Observable';
 import { HxlCheckService } from './../common/hxl-check.service';
 import { AnalyticsService } from './../common/analytics.service';
 
@@ -14,11 +15,9 @@ import { AnalyticsService } from './../common/analytics.service';
 })
 export class ToolsWizardComponent implements OnInit {
   loadingStatus = false;
-  private httpService: HttpService;
 
-  constructor(private hxlProxyService: HxlproxyService, http: Http, private hxlCheckService: HxlCheckService,
+  constructor(private hxlProxyService: HxlproxyService, private httpService: HttpService, private hxlCheckService: HxlCheckService,
               private analyticsService: AnalyticsService) {
-    this.httpService = <HttpService> http;
   }
 
   ngOnInit() {
@@ -30,10 +29,14 @@ export class ToolsWizardComponent implements OnInit {
     this.hxlCheckService.init(environment['hxlCheck']);
     this.analyticsService.init();
 
-    this.httpService.loadingChange.distinctUntilChanged().debounce(val => Observable.timer(val ? 100 : 300)).subscribe((value) => {
-      this.loadingStatus = value;
-      console.log('SPINNER ACTIVE CHANGE;');
-    });
+    this.httpService.loadingChange
+      .pipe(
+        distinctUntilChanged(),
+        debounce(val => observableTimer(val ? 100 : 300))
+      ).subscribe((value) => {
+        this.loadingStatus = value;
+        console.log('SPINNER ACTIVE CHANGE;');
+      });
   }
 
 }

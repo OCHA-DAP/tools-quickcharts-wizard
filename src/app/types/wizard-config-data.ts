@@ -3,6 +3,7 @@ export interface HdxError {
     errorSummary: string;
 }
 
+export interface QCConfigParams { [s: string]: any; }
 
 export class WizardConfigData {
     step1Sample = true;
@@ -10,4 +11,6 @@ export class WizardConfigData {
     url: string;
     recipeUrl: string = null;
     hxlCheckError: HdxError = null;
+
+    qcConfig: QCConfigParams = {};
 }
