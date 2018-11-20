@@ -105,6 +105,7 @@ export class ImportComponent implements OnInit {
     this._selectedUrl = this.getWizardConfig().url ? this.getWizardConfig().url : this.sampleData[0].url;
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.httpService.turnOnModal();
+      this.wizardConfigService.initQuickchartsConfig(params);
       const urlParam = params.get('url');
       if (urlParam) {
         this.wizardConfigService.getWizardConfigData().url = urlParam;
@@ -136,6 +137,7 @@ export class ImportComponent implements OnInit {
       const recipeUrl = encodeURIComponent(this.wizardConfigService.getWizardConfigData().recipeUrl);
       newUrl += `;recipeUrl=${recipeUrl}`;
     }
+    newUrl += this.wizardConfigService.computeQuickChartParams();
     newUrl += `;sample=${this.getWizardConfig().step1Sample}`;
     this.iFrameUrl = this.sanitizer.bypassSecurityTrustResourceUrl(newUrl);
   }
