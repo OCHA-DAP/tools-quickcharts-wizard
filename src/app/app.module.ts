@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { BsDropdownModule } from 'ngx-bootstrap';
-import { SimpleModule} from 'hxl-preview-ng-lib';
+import { HxlPreviewLibModule} from 'hxl-preview-ng-lib';
 import { AppComponent } from './app.component';
 import { ToolsWizardComponent } from './tools-wizard/tools-wizard.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,7 +34,7 @@ export const HTTP_SERVICE_PROVIDERS: any = {
     BrowserModule,
     FormsModule,
     CommonModule,
-    SimpleModule
+    HxlPreviewLibModule
   ],
   providers: [
     HTTP_SERVICE_PROVIDERS,
