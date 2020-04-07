@@ -5,7 +5,7 @@ import { AnalyticsService } from './../../common/analytics.service';
 import { HttpService } from '../../shared/http.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-import',
