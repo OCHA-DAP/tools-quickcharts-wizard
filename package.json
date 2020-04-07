@@ -18,7 +18,6 @@
     "@angular/compiler": "^9.0.1",
     "@angular/core": "^9.0.1",
     "@angular/forms": "^9.0.1",
-    "@angular/http": "^7.0.3",
     "@angular/platform-browser": "^9.0.1",
     "@angular/platform-browser-dynamic": "^9.0.1",
     "@angular/platform-server": "^9.0.1",
