@@ -22,11 +22,11 @@
     "@angular/platform-browser-dynamic": "^11.2.3",
     "@angular/platform-server": "^11.2.3",
     "@angular/router": "^11.2.3",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "core-js": "^2.4.1",
     "hxl-preview-ng-lib": "https://github.com/OCHA-DAP/hdx-hxl-preview/raw/dev/build/hxl-preview-ng-lib-3.0.2.tgz",
     "ngx-bootstrap": "^5.6.1",
-    "rxjs": "^6.5.4",
+    "rxjs": "^6.6.6",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
@@ -40,7 +40,7 @@
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
-    "rxjs-tslint": "^0.1.5",
+    "rxjs-tslint": "^0.1.8",
     "ts-node": "~3.2.0",
     "tslint": "~6.1.0",
     "typescript": "4.0.7"
